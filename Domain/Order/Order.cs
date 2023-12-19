@@ -10,7 +10,7 @@ public class Order : Entity<OrderId>
     public OrderStatus Status { get; private set; } = OrderStatus.PENDING;
     public UserId ConsumerId { get; private set; }
     public int AllowedDays { get; private set; }
-    public UserId? ProviderId { get; private set; } = null;
+    public UserId ProviderId { get; private set; } = UserId.Create(Guid.Empty);
     public DateTime AcceptedDate { get; private set; } = DateTime.MinValue;
     public DateTime DeadLine => AcceptedDate.AddDays(AllowedDays);
 
@@ -29,7 +29,6 @@ public class Order : Entity<OrderId>
                 name,
                 description,
                 consumerId, allowedDays);
-
     }
 
     /// <summary>
@@ -50,4 +49,6 @@ public class Order : Entity<OrderId>
         ProviderId = providerId;
         AcceptedDate = DateTime.UtcNow;
     }
+
+    private Order() { }
 }

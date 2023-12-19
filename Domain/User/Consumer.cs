@@ -1,27 +1,19 @@
-﻿using Domain.Common;
-using Domain.Order;
+﻿using Domain.Order;
 
 namespace Domain.User;
 
-public class Consumer : Entity<UserId>
+public class Consumer : UserBase
 {
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public string Email { get; private set; }
-    public string Password { get; private set; }
-    public string MobileNo { get; private set; }
-
+    public readonly static Consumer Empty = new Consumer(UserId.Create(Guid.Empty), null, null, null, null, null);
     //TODO: Bargain object
-    private List<OrderId> _orderIds = new List<OrderId>();
+    private List<OrderId> _orderIds = [];
     public IReadOnlyList<OrderId> OrderIds => _orderIds.AsReadOnly();
+
+    public override UserType UserType => UserType.CONSUMER;
+
     private Consumer(UserId id, string fName, string lName, string email, string password, string mobileNo)
-        : base(id)
+        : base(id, fName, lName, email, password, mobileNo)
     {
-        FirstName = fName;
-        LastName = lName;
-        Email = email;
-        Password = password;
-        MobileNo = mobileNo;
     }
 
     public static Consumer Create(string fName, string lName, string email, string password, string mobileNo)

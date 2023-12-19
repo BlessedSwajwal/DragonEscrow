@@ -1,27 +1,18 @@
-﻿using Domain.Common;
-using Domain.Order;
+﻿using Domain.Order;
 
 namespace Domain.User;
 
-public class Provider : Entity<UserId>
+public class Provider : UserBase
 {
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public string Email { get; private set; }
-    public string Password { get; private set; }
-    public string MobileNo { get; private set; }
+    public readonly static Provider Empty = new(UserId.Create(Guid.Empty), null, null, null, null, null);
     private List<OrderId> _acceptedOrders = new();
     public IReadOnlyList<OrderId> AcceptedOrders => _acceptedOrders.AsReadOnly();
 
+    public override UserType UserType => UserType.PROVIDER;
 
     private Provider(UserId id, string fName, string lName, string email, string password, string mobileNo)
-        : base(id)
+        : base(id, fName, lName, email, password, mobileNo)
     {
-        FirstName = fName;
-        LastName = lName;
-        Email = email;
-        Password = password;
-        MobileNo = mobileNo;
     }
 
     public static Provider Create(string fName, string lName, string email, string password, string mobileNo)
@@ -40,4 +31,6 @@ public class Provider : Entity<UserId>
         //TODO: Make sure the order also has ProviderId assigned to it. Can use domain events
         _acceptedOrders.Add(orderId);
     }
+
+    private Provider() { }
 }

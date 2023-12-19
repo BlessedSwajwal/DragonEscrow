@@ -2,7 +2,7 @@
 
 public enum UserType
 {
-    USER,
+    CONSUMER,
     PROVIDER,
     ADMIN
 }

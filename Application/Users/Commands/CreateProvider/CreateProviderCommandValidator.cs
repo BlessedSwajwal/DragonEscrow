@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Application.Users.Commands.CreateConsumer;
+namespace Application.Users.Commands.CreateProvider;
 
-public class CreateConsumerCommandValidator : AbstractValidator<CreateConsumerCommand>
+public class CreateProviderCommandValidator : AbstractValidator<CreateProviderCommand>
 {
-    public CreateConsumerCommandValidator()
+    public CreateProviderCommandValidator()
     {
         RuleFor(x => x.FirstName).NotEmpty();
         RuleFor(x => x.LastName).NotEmpty();
