@@ -9,6 +9,7 @@ public class UnitOfWork : IUnitOfWork
 {
     private readonly IConsumerRepository _consumerRepository;
     private readonly IProviderRepository _providerRepository;
+    private readonly IOrderRepository _orderRepository;
     private readonly DragonEscrowDbContext _dbContext;
     private bool _disposed = false;
 
@@ -17,12 +18,14 @@ public class UnitOfWork : IUnitOfWork
         _dbContext = dbContext;
         _consumerRepository = new EConsumerRepository(_dbContext);
         _providerRepository = new EProviderRepository(_dbContext);
+        _orderRepository = new EOrderRepository(_dbContext);
     }
 
     public IConsumerRepository ConsumerRepository => _consumerRepository;
 
     public IProviderRepository ProviderRepository => _providerRepository;
 
+    public IOrderRepository OrderRepository => _orderRepository;
 
     private void Dispose(bool disposing)
     {

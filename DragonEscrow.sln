@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{A02A79C3-A00B-4949-A30E-F62E166CD03E}"
 	ProjectSection(SolutionItems) = preProject
 		Consumer.http = Consumer.http
+		Order.http = Order.http
 		Provider.http = Provider.http
 	EndProjectSection
 EndProject

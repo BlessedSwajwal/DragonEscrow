@@ -5,8 +5,10 @@ namespace Domain.Order;
 
 public class Order : Entity<OrderId>
 {
+    public static Order Empty = new Order(OrderId.Create(Guid.Empty), "", "", 1, null, 0);
     public string Name { get; private set; }
     public string Description { get; private set; }
+    public int Cost { get; private set; }
     public OrderStatus Status { get; private set; } = OrderStatus.PENDING;
     public UserId ConsumerId { get; private set; }
     public int AllowedDays { get; private set; }
@@ -14,20 +16,23 @@ public class Order : Entity<OrderId>
     public DateTime AcceptedDate { get; private set; } = DateTime.MinValue;
     public DateTime DeadLine => AcceptedDate.AddDays(AllowedDays);
 
-    private Order(OrderId id, string name, string description, UserId consumerId, int allowedDays) : base(id)
+
+    private Order(OrderId id, string name, string description, int cost, UserId consumerId, int allowedDays) : base(id)
     {
         Name = name;
         Description = description;
+        Cost = cost;
         ConsumerId = consumerId;
         AllowedDays = allowedDays;
     }
 
-    public static Order Create(string name, string description, UserId consumerId, int allowedDays)
+    public static Order Create(string name, string description, int cost, UserId consumerId, int allowedDays)
     {
         return new(
                 OrderId.CreateUnique(),
                 name,
                 description,
+                cost,
                 consumerId, allowedDays);
     }
 

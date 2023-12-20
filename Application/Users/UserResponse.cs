@@ -1,3 +1,3 @@
 ﻿namespace Application.Users;
 
-public record UserResponse(string FirstName, string LastName, string Email, string UserType, string Token);
+public record UserResponse(Guid id, string FirstName, string LastName, string Email, string Phone, string UserType, string Token);

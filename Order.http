@@ -1,0 +1,17 @@
+@Address=https://localhost:7240/api/Order
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IkNPTlNVTUVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIyMWE4ZWQxNy02OThhLTQzNWUtYTBjZS1hMjQxNmY0NTI1M2MiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYWphbEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNzAzOTIxMjQzLCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.dwQxOYErmITI5zVsdJSGYVuJM-v5wWe2UVAzZBqguC4
+
+POST {{Address}}/create
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+    "Name": "Tile my kitchen floor",
+    "Description": "Kitchen if 10x10 square foot. Want white tiles. Should cover all 4 walls. Must be highest quality tiles",
+    "AllowedDays": 7,
+    "Cost": 45000
+}
+
+############
+GET {{Address}}/627be9fb-9177-4db5-bd3c-fcfc68192011
+Authorization: Bearer {{Token}}

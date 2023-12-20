@@ -16,6 +16,6 @@ POST {{Address}}/login
 Content-Type: application/json
 
 {
-  "email": "string@gmail.com",
+  "email": "sajal@gmail.com",
   "password": "Abc@@12abc"
 }

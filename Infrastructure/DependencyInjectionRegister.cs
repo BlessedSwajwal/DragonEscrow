@@ -2,6 +2,7 @@
 using Infrastructure.Authentication;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.EntityFrameWork;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,8 +22,21 @@ public static class DependencyInjectionRegister
         services.AddDbContext<DragonEscrowDbContext>(options => options.UseSqlServer(""));
 
         AddAuth(services, configuration);
+        AddHttpClients(services, configuration);
+
+        services.AddSingleton<IConfiguration>(configuration);
 
         return services;
+    }
+
+    public static void AddHttpClients(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddHttpClient<IGetPaymentUri, GetPaymentUri>(op =>
+        {
+            var secret = configuration.GetValue<string>("KhaltiSecret");
+            op.BaseAddress = new Uri("https://a.khalti.com/api/v2/epayment");
+            op.DefaultRequestHeaders.Add("Authorization", secret);
+        });
     }
 
     public static void AddAuth(IServiceCollection services, IConfiguration configuration)

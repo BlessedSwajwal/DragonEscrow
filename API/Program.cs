@@ -23,6 +23,7 @@ builder.Services.AddControllers();
     //Mapster
     var config = TypeAdapterConfig.GlobalSettings;
     config.Scan(typeof(Program).Assembly);
+    config.Scan(typeof(DependencyInjectionRegisterApplication).Assembly);
 
     builder.Services.AddSingleton(config);
 }

@@ -25,7 +25,7 @@ public class LoginProviderQueryHandler(IUnitOfWork _unitOfWork, IJwtGenerator _j
         var token = _jwtGenerator.GenerateJwt(provider);
 
         //Generate user response
-        var userResponse = new UserResponse(provider.FirstName, provider.LastName, provider.Email, provider.UserType.ToString(), token);
+        var userResponse = new UserResponse(provider.Id.Value, provider.FirstName, provider.LastName, provider.Email, provider.MobileNo, provider.UserType.ToString(), token);
 
         return userResponse;
     }

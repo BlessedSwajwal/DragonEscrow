@@ -40,7 +40,7 @@ public class CreateProviderCommandHandler : IRequestHandler<CreateProviderComman
         var token = _jwtGenerator.GenerateJwt(provider);
 
         //Create user response
-        var userResponse = new UserResponse(provider.FirstName, provider.LastName, provider.Email, provider.UserType.ToString(), token);
+        var userResponse = new UserResponse(provider.Id.Value, provider.FirstName, provider.LastName, provider.Email, provider.MobileNo, provider.UserType.ToString(), token);
 
         return userResponse;
     }

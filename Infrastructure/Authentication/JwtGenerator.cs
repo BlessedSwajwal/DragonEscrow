@@ -26,8 +26,9 @@ public sealed class JwtGenerator : IJwtGenerator
             new Claim(ClaimTypes.NameIdentifier, User.Id.Value.ToString()),
             new Claim(ClaimTypes.Email, User.Email),
             new Claim(ClaimTypes.GivenName, User.FirstName),
-            new Claim(ClaimTypes.Name, User.LastName)
-        };
+            new Claim(ClaimTypes.Name, User.LastName),
+            new Claim(ClaimTypes.MobilePhone, User.MobileNo)
+    };
 
         var jwt = new JwtSecurityToken(
             issuer: _jwtSettings.Issuer,

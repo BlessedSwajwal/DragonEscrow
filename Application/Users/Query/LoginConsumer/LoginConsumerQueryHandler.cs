@@ -33,7 +33,7 @@ public class LoginConsumerQueryHandler : IRequestHandler<LoginConsumerQuery, One
         var token = _jwtGenerator.GenerateJwt(consumer);
 
         //Generate user response
-        var userResponse = new UserResponse(consumer.FirstName, consumer.LastName, consumer.Email, consumer.UserType.ToString(), token);
+        var userResponse = new UserResponse(consumer.Id.Value, consumer.FirstName, consumer.LastName, consumer.Email, consumer.MobileNo, consumer.UserType.ToString(), token);
 
         return userResponse;
 

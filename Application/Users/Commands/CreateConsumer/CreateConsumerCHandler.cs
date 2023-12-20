@@ -41,7 +41,7 @@ public class CreateConsumerCHandler : IRequestHandler<CreateConsumerCommand, One
         var token = _jwtGenerator.GenerateJwt(consumer);
 
         //Create user response
-        var userResponse = new UserResponse(consumer.FirstName, consumer.LastName, consumer.Email, consumer.UserType.ToString(), token);
+        var userResponse = new UserResponse(consumer.Id.Value, consumer.FirstName, consumer.LastName, consumer.Email, consumer.MobileNo, consumer.UserType.ToString(), token);
 
         return userResponse;
     }

@@ -6,5 +6,6 @@ public interface IUnitOfWork : IDisposable
 {
     public IConsumerRepository ConsumerRepository { get; }
     public IProviderRepository ProviderRepository { get; }
+    public IOrderRepository OrderRepository { get; }
     Task SaveAsync();
 }
