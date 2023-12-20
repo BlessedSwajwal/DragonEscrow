@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Authorization;
 using OneOf;
 using System.Security.Claims;
 
-namespace Application.Orders.Query;
+namespace Application.Orders.Query.GetOrderDetail;
 
 public class GetOrderDetailQueryHandler(
     IAuthorizationService _authorizationService,
     IUnitOfWork unitOfWork,
-    IGetPaymentUri paymentUri) : IRequestHandler<GetOrderDetailQuery, OneOf<OrderResponse, IServiceError, ValidationErrors>>
+    IPaymentService paymentUri) : IRequestHandler<GetOrderDetailQuery, OneOf<OrderResponse, IServiceError, ValidationErrors>>
 {
     public async Task<OneOf<OrderResponse, IServiceError, ValidationErrors>> Handle(GetOrderDetailQuery request, CancellationToken cancellationToken)
     {
@@ -33,7 +33,7 @@ public class GetOrderDetailQueryHandler(
         }
 
         //Get user for payment bill
-        Object user = new
+        object user = new
         {
             name = request.User.FindFirst(ClaimTypes.GivenName)!.Value + request.User.FindFirst(ClaimTypes.Name)!.Value,
             email = request.User.FindFirst(ClaimTypes.Email)!.Value,
@@ -56,7 +56,7 @@ public class GetOrderDetailQueryHandler(
             url = await paymentUri.GetPaymentUriAsync(user, order);
         }
 
-        var orderResponse = order.BuildAdapter<Order>()
+        var orderResponse = order.BuildAdapter()
                                 .AddParameters("PaymentUri", url)
                                 .AdaptToType<OrderResponse>();
 

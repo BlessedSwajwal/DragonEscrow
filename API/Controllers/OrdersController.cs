@@ -1,8 +1,10 @@
-﻿using Application.Orders.Command;
-using Application.Orders.Query;
+﻿using Application.Orders.Command.CreateOrder;
+using Application.Orders.Command.VerifyPayment;
+using Application.Orders.Query.GetOrderDetail;
 using Contracts;
 using Mapster;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
@@ -34,6 +36,18 @@ public class OrdersController(ISender _mediator) : ControllerBase
     {
         var query = new GetOrderDetailQuery(User, orderId);
         var response = await _mediator.Send(query);
+        return response.Match(
+                orderResponse => Ok(orderResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpGet("paymentCallback/{orderId}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> VerifyPayment([FromQuery] string pidx, [FromQuery] Guid purchase_order_id)
+    {
+        var command = new VerifyPaymentCommand(purchase_order_id, pidx);
+        var response = await _mediator.Send(command);
         return response.Match(
                 orderResponse => Ok(orderResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),

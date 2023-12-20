@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Orders.Query;
+namespace Application.Orders.Query.GetOrderDetail;
 
 public class GetOrderDetailQueryValidator : AbstractValidator<GetOrderDetailQuery>
 {

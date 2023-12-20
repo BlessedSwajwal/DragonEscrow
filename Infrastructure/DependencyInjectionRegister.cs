@@ -31,7 +31,7 @@ public static class DependencyInjectionRegister
 
     public static void AddHttpClients(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHttpClient<IGetPaymentUri, GetPaymentUri>(op =>
+        services.AddHttpClient<IPaymentService, PaymentService>(op =>
         {
             var secret = configuration.GetValue<string>("KhaltiSecret");
             op.BaseAddress = new Uri("https://a.khalti.com/api/v2/epayment");

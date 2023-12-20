@@ -7,7 +7,7 @@ using MapsterMapper;
 using MediatR;
 using OneOf;
 
-namespace Application.Orders.Command;
+namespace Application.Orders.Command.CreateOrder;
 
 public class CreateOrderCommandHandler(IUnitOfWork _unitOfWork, IMapper _mapper) : IRequestHandler<CreateOrderCommand, OneOf<OrderResponse, IServiceError, ValidationErrors>>
 {
@@ -23,7 +23,7 @@ public class CreateOrderCommandHandler(IUnitOfWork _unitOfWork, IMapper _mapper)
         await _unitOfWork.OrderRepository.AddAsync(order);
 
         //Create order response
-        var response = order.BuildAdapter<Order>()
+        var response = order.BuildAdapter()
                             .AddParameters("PaymentUri", "")
                             .AdaptToType<OrderResponse>();
         return response;
