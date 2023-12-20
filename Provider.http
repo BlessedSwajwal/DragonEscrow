@@ -1,0 +1,21 @@
+@Address=https://localhost:7240/api/Provider
+
+POST {{Address}}/register
+Content-Type: application/json
+
+{
+  "firstName": "Sajal",
+  "lastName": "Ghimire",
+  "email": "sajal@gmail.com",
+  "phone": "1234567890",
+  "password": "Abc@@12abc"
+}
+
+####### Login as consumer
+POST {{Address}}/login
+Content-Type: application/json
+
+{
+  "email": "sajal@gmail.com",
+  "password": "Abc@@12abc"
+}
