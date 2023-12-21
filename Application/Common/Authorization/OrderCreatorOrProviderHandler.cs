@@ -27,7 +27,9 @@ public class OrderCreatorOrProviderHandler : AuthorizationHandler<OperationAutho
             return Task.CompletedTask;
         }
 
-        if (userId == resource.ConsumerId || context.User.FindFirst("UserType")!.Value.ToLower() == UserType.PROVIDER.ToString().ToLower())
+        //TODO: Already accepted orders should not be able to be viewed by other providers.
+
+        if (userId == resource.ConsumerId || context.User.FindFirst("UserType")!.Value.Equals(UserType.PROVIDER.ToString(), StringComparison.CurrentCultureIgnoreCase))
         {
             context.Succeed(requirement);
         }

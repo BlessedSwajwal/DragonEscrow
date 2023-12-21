@@ -28,12 +28,15 @@ public class Order : Entity<OrderId>
 
     public static Order Create(string name, string description, int cost, UserId consumerId, int allowedDays)
     {
-        return new(
+        var order = new Order(
                 OrderId.CreateUnique(),
                 name,
                 description,
                 cost,
-                consumerId, allowedDays);
+                consumerId,
+                allowedDays);
+
+        return order;
     }
 
     /// <summary>
@@ -53,7 +56,10 @@ public class Order : Entity<OrderId>
     {
         ProviderId = providerId;
         AcceptedDate = DateTime.UtcNow;
+
+        this.AddDomainEvent(new OrderAcceptedEvent(this, providerId));
     }
+
 
     private Order() { }
 }

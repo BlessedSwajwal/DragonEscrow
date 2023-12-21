@@ -6,5 +6,7 @@ public enum OrderStatus
     CREATED,
     CANCELLED,
     PROCESSING,
-    FULFILLED
+    FULFILLED,
+    REFUND_PROCESSING,
+    REFUNDED_AND_CANCELLED
 }

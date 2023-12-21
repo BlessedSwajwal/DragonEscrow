@@ -1,4 +1,5 @@
-﻿using Domain.Order;
+﻿using Domain.Common;
+using Domain.Order;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,9 @@ public class DragonEscrowDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DragonEscrowDbContext).Assembly);
+        modelBuilder
+            .Ignore<List<IDomainEvent>>()
+            .ApplyConfigurationsFromAssembly(typeof(DragonEscrowDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
 }
