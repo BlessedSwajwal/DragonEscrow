@@ -36,6 +36,8 @@ public class Order : Entity<OrderId>
                 consumerId,
                 allowedDays);
 
+        order.AddDomainEvent(new OrderCreatedEvent(order));
+
         return order;
     }
 

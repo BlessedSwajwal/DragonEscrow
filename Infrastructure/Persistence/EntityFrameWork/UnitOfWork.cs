@@ -63,7 +63,7 @@ public class UnitOfWork : IUnitOfWork
                                     .Select(entry => entry.Entity).ToList();
 
         //Get domain events
-        var domainEvents = entitiesWithDomainEvents.SelectMany(en => en.DomainEvents);
+        var domainEvents = entitiesWithDomainEvents.SelectMany(en => en.DomainEvents).ToList();
 
         //Clear domain events
         foreach (var entity in entitiesWithDomainEvents)

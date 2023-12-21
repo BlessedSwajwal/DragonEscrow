@@ -18,4 +18,9 @@ public class ConsumerRepository : IConsumerRepository
         if (consumer is null) return Consumer.Empty;
         return consumer;
     }
+
+    public Task<Consumer> GetByIdAsync(UserId id)
+    {
+        throw new NotImplementedException();
+    }
 }

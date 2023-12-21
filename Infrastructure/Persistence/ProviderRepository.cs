@@ -20,4 +20,9 @@ public class ProviderRepository : IProviderRepository
         if (provider is null) return Provider.Empty;
         return provider;
     }
+
+    public Task<Provider> GetByIdAsync(UserId id)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -20,9 +20,10 @@ public class VerifyPaymentCommandHandler(IUnitOfWork unitOfWork, IPaymentService
         //Check payment status
         PaymentConfirmation paymentConfirmation = await paymentService.VerifyPayment(request.Pidx);
 
-        if (order.Status == OrderStatus.PENDING)
+        if (paymentConfirmation.Status == "Completed" && order.Status == OrderStatus.PENDING)
         {
             order.ChangeStatus(OrderStatus.CREATED);
+            await unitOfWork.SaveAsync();
         }
 
         if (paymentConfirmation.Status.Equals("completed", StringComparison.CurrentCultureIgnoreCase))

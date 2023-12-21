@@ -25,4 +25,11 @@ public class EProviderRepository : IProviderRepository
         if (provider is null) return Provider.Empty;
         return provider;
     }
+
+    public async Task<Provider> GetByIdAsync(UserId id)
+    {
+        var provider = await _dbContext.Providers.FirstOrDefaultAsync(p => p.Id == id);
+        if (provider is null) return Provider.Empty;
+        return provider;
+    }
 }

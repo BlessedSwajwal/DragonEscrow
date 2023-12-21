@@ -6,5 +6,5 @@ public class OrderAccessDenied : IServiceError
 {
     public int StatusCode => (int)HttpStatusCode.Unauthorized;
 
-    public string? ErrorMessage => "Not Authorized to view the order details.";
+    public string? ErrorMessage => "Not Authorized for this order.";
 }

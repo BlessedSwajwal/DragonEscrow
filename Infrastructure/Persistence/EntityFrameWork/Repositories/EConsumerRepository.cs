@@ -23,4 +23,11 @@ public class EConsumerRepository : IConsumerRepository
         if (user is null) { return Consumer.Empty; }
         return user;
     }
+
+    public async Task<Consumer> GetByIdAsync(UserId id)
+    {
+        var consumer = await _dbContext.Consumers.FirstOrDefaultAsync(u => u.Id == id);
+        if (consumer is null) { return Consumer.Empty; };
+        return consumer;
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using Application.Common.Services;
 using Infrastructure.Authentication;
-using Infrastructure.Persistence;
 using Infrastructure.Persistence.EntityFrameWork;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,8 +17,8 @@ public static class DependencyInjectionRegister
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IJwtGenerator, JwtGenerator>();
-        services.AddScoped<IUnitOfWork, StaticUnitOfWork>();
-        services.AddDbContext<DragonEscrowDbContext>(options => options.UseSqlServer(""));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddDbContext<DragonEscrowDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DragonEscrowDb")));
 
         AddAuth(services, configuration);
         AddHttpClients(services, configuration);
