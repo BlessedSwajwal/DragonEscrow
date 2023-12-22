@@ -10,5 +10,5 @@ public record OrderResponse(
     int AllowedDays,
     Guid ProviderId,
     DateTime AcceptedDate,
-    DateTime Deadline,
+    DateTime DeadLine,
     string PaymentUri);

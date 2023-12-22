@@ -15,8 +15,13 @@ Authorization: Bearer {{Token}}
 
 ############
 GET {{Address}}/536da380-4ed8-4d4a-a1dc-a1f1d214436c
-Authorization: Bearer {{ProviderToken}}
+Authorization: Bearer {{Token}}
 
 ########### Accept order - need providerId
 GET {{Address}}/Accept/536da380-4ed8-4d4a-a1dc-a1f1d214436c
 Authorization: Bearer {{ProviderToken}}
+
+
+######### GET ALL CONSUMERS ORDER
+GET {{Address}}/GetAllOrder
+Authorization: Bearer {{Token}}

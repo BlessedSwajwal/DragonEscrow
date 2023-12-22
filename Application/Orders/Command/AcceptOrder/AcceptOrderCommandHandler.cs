@@ -25,7 +25,7 @@ public class AcceptOrderCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) :
         order.ChangeStatus(OrderStatus.PROCESSING);
         await unitOfWork.SaveAsync();
 
-        var orderResponse = order.BuildAdapter<Order>()
+        var orderResponse = order.BuildAdapter()
                                 .AddParameters("PaymentUri", "")
                                 .AdaptToType<OrderResponse>();
         return orderResponse;

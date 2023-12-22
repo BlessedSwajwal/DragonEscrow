@@ -1,5 +1,6 @@
 ﻿using Application.Common.Repositories;
 using Domain.Order;
+using Domain.User;
 
 namespace Infrastructure.Persistence;
 
@@ -11,6 +12,11 @@ public class OrderRepository : IOrderRepository
         await Task.CompletedTask;
         _orders.Add(order);
         return order;
+    }
+
+    public Task<List<Order>> GetAllOrdersAsyncFromConsumerId(UserId id)
+    {
+        throw new NotImplementedException();
     }
 
     public async Task<Order> GetOrderByIdAsync(OrderId id)

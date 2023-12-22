@@ -1,5 +1,6 @@
 ﻿using Application.Common.Repositories;
 using Domain.Order;
+using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.EntityFrameWork.Repositories;
@@ -10,6 +11,12 @@ public class EOrderRepository(DragonEscrowDbContext _dbContext) : IOrderReposito
     {
         await _dbContext.Orders.AddAsync(order);
         return order;
+    }
+
+    public async Task<List<Order>> GetAllOrdersAsyncFromConsumerId(UserId id)
+    {
+        var orders = await _dbContext.Orders.Where(o => o.ConsumerId == id).OrderBy(o => o.Status).ToListAsync();
+        return orders;
     }
 
     public async Task<Order> GetOrderByIdAsync(OrderId id)
