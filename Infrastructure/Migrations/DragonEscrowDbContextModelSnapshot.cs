@@ -33,6 +33,9 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AllowedDays")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CompletionDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("ConsumerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -120,9 +123,61 @@ namespace Infrastructure.Migrations
                     b.ToTable("Providers", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Order.Order", b =>
+                {
+                    b.OwnsOne("Domain.Order.Bid", "AcceptedBid", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("BidId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("ProposedAmount")
+                                .HasColumnType("int");
+
+                            b1.HasKey("Id", "BidId");
+
+                            b1.HasIndex("BidId")
+                                .IsUnique();
+
+                            b1.ToTable("Order-AcceptedBid", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("BidId");
+                        });
+
+                    b.OwnsMany("Domain.Order.Bid", "Bids", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("BidId");
+
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("ProposedAmount")
+                                .HasColumnType("int");
+
+                            b1.HasKey("Id", "OrderId");
+
+                            b1.HasIndex("OrderId");
+
+                            b1.ToTable("Order-Bids", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.Navigation("AcceptedBid")
+                        .IsRequired();
+
+                    b.Navigation("Bids");
+                });
+
             modelBuilder.Entity("Domain.User.Consumer", b =>
                 {
-                    b.OwnsMany("Domain.Order.OrderId", "OrderIds", b1 =>
+                    b.OwnsMany("Domain.Order.ValueObjects.OrderId", "OrderIds", b1 =>
                         {
                             b1.Property<Guid>("Value")
                                 .HasColumnType("uniqueidentifier")
@@ -146,7 +201,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.User.Provider", b =>
                 {
-                    b.OwnsMany("Domain.Order.OrderId", "AcceptedOrders", b1 =>
+                    b.OwnsMany("Domain.Order.ValueObjects.OrderId", "AcceptedOrders", b1 =>
                         {
                             b1.Property<Guid>("Value")
                                 .HasColumnType("uniqueidentifier")

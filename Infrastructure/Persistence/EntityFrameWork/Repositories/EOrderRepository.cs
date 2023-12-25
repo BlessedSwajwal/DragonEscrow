@@ -1,5 +1,6 @@
 ﻿using Application.Common.Repositories;
 using Domain.Order;
+using Domain.Order.ValueObjects;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
 

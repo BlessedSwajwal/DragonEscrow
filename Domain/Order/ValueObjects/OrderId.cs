@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Domain.Order;
+namespace Domain.Order.ValueObjects;
 
 public class OrderId : ValueObject
 {

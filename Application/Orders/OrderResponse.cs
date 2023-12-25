@@ -11,4 +11,6 @@ public record OrderResponse(
     Guid ProviderId,
     DateTime AcceptedDate,
     DateTime DeadLine,
-    string PaymentUri);
+    string PaymentUri,
+    List<BidResponse> Bids,
+    BidResponse AcceptedBid);

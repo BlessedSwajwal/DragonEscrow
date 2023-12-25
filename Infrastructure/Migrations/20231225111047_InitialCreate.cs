@@ -34,11 +34,13 @@ namespace Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cost = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ConsumerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AllowedDays = table.Column<int>(type: "int", nullable: false),
                     ProviderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AcceptedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AcceptedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CompletionDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,6 +82,44 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Order-AcceptedBid",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BidId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProposedAmount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order-AcceptedBid", x => new { x.Id, x.BidId });
+                    table.ForeignKey(
+                        name: "FK_Order-AcceptedBid_Order_BidId",
+                        column: x => x.BidId,
+                        principalTable: "Order",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Order-Bids",
+                columns: table => new
+                {
+                    BidId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProposedAmount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order-Bids", x => new { x.BidId, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_Order-Bids_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Provider_AcceptedOrderId",
                 columns: table => new
                 {
@@ -103,6 +143,17 @@ namespace Infrastructure.Migrations
                 column: "ConsumerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Order-AcceptedBid_BidId",
+                table: "Order-AcceptedBid",
+                column: "BidId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Order-Bids_OrderId",
+                table: "Order-Bids",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Provider_AcceptedOrderId_ProviderId",
                 table: "Provider_AcceptedOrderId",
                 column: "ProviderId");
@@ -115,13 +166,19 @@ namespace Infrastructure.Migrations
                 name: "Consumer_OrderId");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Order-AcceptedBid");
+
+            migrationBuilder.DropTable(
+                name: "Order-Bids");
 
             migrationBuilder.DropTable(
                 name: "Provider_AcceptedOrderId");
 
             migrationBuilder.DropTable(
                 name: "Consumers");
+
+            migrationBuilder.DropTable(
+                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "Providers");

@@ -1,4 +1,4 @@
-﻿using Domain.Order;
+﻿using Domain.Order.ValueObjects;
 
 namespace Domain.User;
 

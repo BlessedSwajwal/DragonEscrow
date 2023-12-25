@@ -1,5 +1,5 @@
 ﻿using Application.Common.Services;
-using Domain.Order;
+using Domain.Order.Events;
 using MediatR;
 
 namespace Application.Users.Events;
