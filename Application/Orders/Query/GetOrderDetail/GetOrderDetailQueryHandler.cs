@@ -19,7 +19,7 @@ public class GetOrderDetailQueryHandler(
     public async Task<OneOf<OrderResponse, IServiceError, ValidationErrors>> Handle(GetOrderDetailQuery request, CancellationToken cancellationToken)
     {
         //get the order
-        var order = await unitOfWork.OrderRepository.GetOrderByIdAsync(OrderId.Create(request.OrderId));
+        Order order = await unitOfWork.OrderRepository.GetOrderByIdAsync(OrderId.Create(request.OrderId));
 
         //Get creator of order
 

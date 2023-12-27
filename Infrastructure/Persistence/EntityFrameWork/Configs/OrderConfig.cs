@@ -1,4 +1,5 @@
-﻿using Domain.Order;
+﻿using Domain.Bids;
+using Domain.Order;
 using Domain.Order.ValueObjects;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
@@ -39,17 +40,9 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
             .HasField("_bidIds")
             .UsePropertyAccessMode(PropertyAccessMode.Field);
 
-        //builder.OwnsOne(o => o.AcceptedBid, ab =>
-        //{
-        //    ab.ToTable("Order-AcceptedBid");
-        //    ab.WithOwner().HasForeignKey("BidId");
-        //    ab.HasKey(["Id", "BidId"]);
+        //builder.HasOne(o => o.AcceptedBid);
 
-        //    ab.Property(a => a.Id)
-        //        .ValueGeneratedNever()
-        //        .HasConversion(id => id.Value, val => BidId.Create(val));
-        //});
-
-        builder.HasOne(o => o.AcceptedBid);
+        builder.Property(o => o.AcceptedBidId)
+            .HasConversion(id => id.Value, val => BidId.Create(val));
     }
 }

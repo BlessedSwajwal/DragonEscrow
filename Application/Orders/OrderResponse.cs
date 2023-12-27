@@ -13,4 +13,4 @@ public record OrderResponse(
     DateTime DeadLine,
     string PaymentUri,
     IReadOnlyList<BidResponse> Bids,
-    BidResponse AcceptedBid);
+    Guid AcceptedBid);

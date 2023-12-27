@@ -13,15 +13,20 @@ public class EBidRepository(DragonEscrowDbContext context) : IBidRepository
 
     public async Task<IReadOnlyList<Bid>> GetBidListAsync(IReadOnlyList<BidId> bidIds)
     {
-        //var bidList = await context.Bids.Where(b => bidIds.Contains(b.Id)).OrderByDescending(b => b.ProposedAmount).ToListAsync();
 
-        var bids = await (from bid in context.Bids
-                          where bidIds.Contains(bid.Id)
-                          orderby bid.ProposedAmount descending
-                          select bid).ToListAsync();
+        //var bids = await (from bid in context.Bids
+        //                  where bidIds.Contains(bid.Id)
+        //                  // orderby bid.ProposedAmount descending
+        //                  select bid).ToListAsync();
 
+        var bids = await context.Bids.Where(b => bidIds.Contains(b.Id)).ToListAsync();
+        var realBids = new List<Bid>();
 
-        //bidList = bidList.OrderByDescending(b => b.ProposedAmount);
-        return bids;
+        foreach (var bid in context.Bids)
+        {
+            if (bidIds.Contains(bid.Id))
+                realBids.Add(bid);
+        }
+        return realBids;
     }
 }

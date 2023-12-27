@@ -21,8 +21,8 @@ public class Order : Entity<OrderId>
     public DateTime CompletionDate { get; private set; } = DateTime.MinValue;
     private List<BidId> _bidIds = [];
     public IReadOnlyList<BidId> BidIds => _bidIds.AsReadOnly();
-    public Bid AcceptedBid { get; private set; } = Bid.Empty;
-
+    //public Bid? AcceptedBid { get; private set; }
+    public BidId? AcceptedBidId { get; private set; }
 
     private Order(OrderId id, string name, string description, int cost, UserId consumerId, int allowedDays) : base(id)
     {
@@ -80,9 +80,9 @@ public class Order : Entity<OrderId>
         //TODO: Order created event
     }
 
-    public void AcceptBid(Order order, Bid bid)
+    public void AcceptBid(Order order, BidId bid)
     {
-        order.AcceptedBid = bid;
+        order.AcceptedBidId = bid;
     }
     private Order() { }
 }

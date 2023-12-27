@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DragonEscrowDbContext))]
-    [Migration("20231227034923_InitialCreate")]
+    [Migration("20231227075556_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -53,6 +53,9 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Order.Order", b =>
                 {
                     b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AcceptedBidId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AcceptedDate")
@@ -151,15 +154,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("Providers", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Bids.Bid", b =>
-                {
-                    b.HasOne("Domain.Order.Order", null)
-                        .WithOne("AcceptedBid")
-                        .HasForeignKey("Domain.Bids.Bid", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Domain.Order.Order", b =>
                 {
                     b.OwnsMany("Domain.Bids.BidId", "BidIds", b1 =>
@@ -229,12 +223,6 @@ namespace Infrastructure.Migrations
                         });
 
                     b.Navigation("AcceptedOrders");
-                });
-
-            modelBuilder.Entity("Domain.Order.Order", b =>
-                {
-                    b.Navigation("AcceptedBid")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
