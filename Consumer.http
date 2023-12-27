@@ -1,4 +1,6 @@
 @Address=https://localhost:7240/api/Consumer
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IkNPTlNVTUVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIwMjYxOGQ5Zi1iYjc2LTQwNzAtYTUxZC0yMzZiNDFhOTk3NzciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYWphbEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNzA0NTM0MTU3LCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.vNv9JobnY00oMfw6Kza44ms80M1q_a0O65zJbKbWews
+
 
 POST {{Address}}/register
 Content-Type: application/json
@@ -19,3 +21,7 @@ Content-Type: application/json
   "email": "sajal@gmail.com",
   "password": "Abc@@12abc"
 }
+
+######### GET ALL CONSUMERS ORDER
+GET {{Address}}/GetAllOrder
+Authorization: Bearer {{Token}}

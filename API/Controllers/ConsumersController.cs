@@ -1,4 +1,5 @@
-﻿using Application.Users.Commands.CreateConsumer;
+﻿using Application.Orders.Query.GetAllConsumerOrders;
+using Application.Users.Commands.CreateConsumer;
 using Application.Users.Query.LoginConsumer;
 using Contracts;
 using MapsterMapper;
@@ -6,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Security.Claims;
 
 namespace API.Controllers;
 
@@ -47,6 +49,19 @@ public class ConsumersController : ControllerBase
         var response = await _mediator.Send(query);
         return response.Match(
                 consumerResponse => Ok(consumerResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpGet("GetAllOrder")]
+    public async Task<IActionResult> GetAllOrder()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var query = new GetAllConsumerOrdersQuery(Guid.Parse(userId!));
+
+        var response = await _mediator.Send(query);
+        return response.Match(
+                orderResponse => Ok(orderResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }

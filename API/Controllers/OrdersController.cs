@@ -1,7 +1,6 @@
 ﻿using Application.Orders.Command.AcceptOrder;
 using Application.Orders.Command.CreateOrder;
 using Application.Orders.Command.VerifyPayment;
-using Application.Orders.Query.GetAllConsumerOrders;
 using Application.Orders.Query.GetOrderDetail;
 using Contracts;
 using Domain.User;
@@ -65,19 +64,6 @@ public class OrdersController(ISender _mediator) : ControllerBase
 
         var command = new AcceptOrderCommand(orderId, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
         var response = await _mediator.Send(command);
-        return response.Match(
-                orderResponse => Ok(orderResponse),
-                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
-                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
-    }
-
-    [HttpGet("GetAllOrder")]
-    public async Task<IActionResult> GetAllOrder()
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var query = new GetAllConsumerOrdersQuery(Guid.Parse(userId!));
-
-        var response = await _mediator.Send(query);
         return response.Match(
                 orderResponse => Ok(orderResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),

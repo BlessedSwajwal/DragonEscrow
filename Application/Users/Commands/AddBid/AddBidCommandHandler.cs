@@ -31,6 +31,9 @@ public class AddBidCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<AddB
 
         var bid = Bid.Create(provider.Id, order.Id, request.ProposedAmount, request.Comment);
         order.AddBid(bid.Id);
+        //TODO: Event handlers should perform this.
+        provider.AssignOrder(order.Id);
+
         await unitOfWork.BidRepository.AddBid(bid);
         await unitOfWork.SaveAsync();
 

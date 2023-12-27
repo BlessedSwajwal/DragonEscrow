@@ -7,9 +7,9 @@ using OneOf;
 
 namespace Application.Orders.Query.GetAllConsumerOrders;
 
-public class GetAllConsumerOrdersQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetAllConsumerOrdersQuery, OneOf<List<OrderResponse>, IServiceError, ValidationErrors>>
+public class GetAllConsumerOrdersQueryHandler(IUnitOfWork unitOfWork) : IRequestHandler<GetAllConsumerOrdersQuery, OneOf<List<AllOrderResponse>, IServiceError, ValidationErrors>>
 {
-    public async Task<OneOf<List<OrderResponse>, IServiceError, ValidationErrors>> Handle(GetAllConsumerOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<OneOf<List<AllOrderResponse>, IServiceError, ValidationErrors>> Handle(GetAllConsumerOrdersQuery request, CancellationToken cancellationToken)
     {
         //Get the user
         var consumer = await unitOfWork.ConsumerRepository.GetByIdAsync(UserId.Create(request.ConsumerId));
@@ -21,10 +21,7 @@ public class GetAllConsumerOrdersQueryHandler(IUnitOfWork unitOfWork) : IRequest
         var orderList = await unitOfWork.OrderRepository.GetAllOrdersAsyncFromConsumerId(UserId.Create(request.ConsumerId));
 
         //List of order respose
-        List<OrderResponse> result = orderList.BuildAdapter()
-                                        .AddParameters("PaymentUri", "")
-                                        .AdaptToType<List<OrderResponse>>();
-
+        var result = orderList.Adapt<List<AllOrderResponse>>();
         return result;
     }
 }
