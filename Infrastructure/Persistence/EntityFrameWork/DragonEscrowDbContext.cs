@@ -1,4 +1,5 @@
-﻿using Domain.Common;
+﻿using Domain.Bids;
+using Domain.Common;
 using Domain.Order;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ public class DragonEscrowDbContext : DbContext
     public DbSet<Consumer> Consumers { get; set; }
     public DbSet<Provider> Providers { get; set; }
     public DbSet<Order> Orders { get; set; }
+    public DbSet<Bid> Bids { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

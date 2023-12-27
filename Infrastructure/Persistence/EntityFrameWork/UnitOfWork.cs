@@ -12,6 +12,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly IConsumerRepository _consumerRepository;
     private readonly IProviderRepository _providerRepository;
     private readonly IOrderRepository _orderRepository;
+    private readonly IBidRepository _bidRepository;
     private readonly DragonEscrowDbContext _dbContext;
     private readonly IPublisher _publisher;
     private bool _disposed = false;
@@ -22,6 +23,7 @@ public class UnitOfWork : IUnitOfWork
         _consumerRepository = new EConsumerRepository(_dbContext);
         _providerRepository = new EProviderRepository(_dbContext);
         _orderRepository = new EOrderRepository(_dbContext);
+        _bidRepository = new EBidRepository(_dbContext);
         _publisher = publisher;
     }
 
@@ -30,6 +32,8 @@ public class UnitOfWork : IUnitOfWork
     public IProviderRepository ProviderRepository => _providerRepository;
 
     public IOrderRepository OrderRepository => _orderRepository;
+
+    public IBidRepository BidRepository => _bidRepository;
 
     private void Dispose(bool disposing)
     {

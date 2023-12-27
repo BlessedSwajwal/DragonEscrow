@@ -82,19 +82,21 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order-AcceptedBid",
+                name: "Bids",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BidId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProposedAmount = table.Column<int>(type: "int", nullable: false)
+                    BidderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProposedAmount = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order-AcceptedBid", x => new { x.Id, x.BidId });
+                    table.PrimaryKey("PK_Bids", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order-AcceptedBid_Order_BidId",
-                        column: x => x.BidId,
+                        name: "FK_Bids_Order_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Order",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -104,13 +106,12 @@ namespace Infrastructure.Migrations
                 name: "Order-Bids",
                 columns: table => new
                 {
-                    BidId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProposedAmount = table.Column<int>(type: "int", nullable: false)
+                    Value = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order-Bids", x => new { x.BidId, x.OrderId });
+                    table.PrimaryKey("PK_Order-Bids", x => new { x.Value, x.OrderId });
                     table.ForeignKey(
                         name: "FK_Order-Bids_Order_OrderId",
                         column: x => x.OrderId,
@@ -138,15 +139,14 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bids_OrderId",
+                table: "Bids",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Consumer_OrderId_ConsumerId",
                 table: "Consumer_OrderId",
                 column: "ConsumerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order-AcceptedBid_BidId",
-                table: "Order-AcceptedBid",
-                column: "BidId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Order-Bids_OrderId",
@@ -163,10 +163,10 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Consumer_OrderId");
+                name: "Bids");
 
             migrationBuilder.DropTable(
-                name: "Order-AcceptedBid");
+                name: "Consumer_OrderId");
 
             migrationBuilder.DropTable(
                 name: "Order-Bids");

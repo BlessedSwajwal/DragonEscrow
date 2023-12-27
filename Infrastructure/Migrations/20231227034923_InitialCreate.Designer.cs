@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DragonEscrowDbContext))]
-    [Migration("20231225111047_InitialCreate")]
+    [Migration("20231227034923_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,6 +24,31 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Domain.Bids.Bid", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BidderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ProposedAmount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Bids");
+                });
 
             modelBuilder.Entity("Domain.Order.Order", b =>
                 {
@@ -126,43 +151,26 @@ namespace Infrastructure.Migrations
                     b.ToTable("Providers", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Bids.Bid", b =>
+                {
+                    b.HasOne("Domain.Order.Order", null)
+                        .WithOne("AcceptedBid")
+                        .HasForeignKey("Domain.Bids.Bid", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Order.Order", b =>
                 {
-                    b.OwnsOne("Domain.Order.Bid", "AcceptedBid", b1 =>
+                    b.OwnsMany("Domain.Bids.BidId", "BidIds", b1 =>
                         {
-                            b1.Property<Guid>("Id")
+                            b1.Property<Guid>("Value")
                                 .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("BidId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<int>("ProposedAmount")
-                                .HasColumnType("int");
-
-                            b1.HasKey("Id", "BidId");
-
-                            b1.HasIndex("BidId")
-                                .IsUnique();
-
-                            b1.ToTable("Order-AcceptedBid", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("BidId");
-                        });
-
-                    b.OwnsMany("Domain.Order.Bid", "Bids", b1 =>
-                        {
-                            b1.Property<Guid>("Id")
-                                .HasColumnType("uniqueidentifier")
-                                .HasColumnName("BidId");
 
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<int>("ProposedAmount")
-                                .HasColumnType("int");
-
-                            b1.HasKey("Id", "OrderId");
+                            b1.HasKey("Value", "OrderId");
 
                             b1.HasIndex("OrderId");
 
@@ -172,10 +180,7 @@ namespace Infrastructure.Migrations
                                 .HasForeignKey("OrderId");
                         });
 
-                    b.Navigation("AcceptedBid")
-                        .IsRequired();
-
-                    b.Navigation("Bids");
+                    b.Navigation("BidIds");
                 });
 
             modelBuilder.Entity("Domain.User.Consumer", b =>
@@ -224,6 +229,12 @@ namespace Infrastructure.Migrations
                         });
 
                     b.Navigation("AcceptedOrders");
+                });
+
+            modelBuilder.Entity("Domain.Order.Order", b =>
+                {
+                    b.Navigation("AcceptedBid")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

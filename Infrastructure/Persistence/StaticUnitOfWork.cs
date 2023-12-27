@@ -22,6 +22,8 @@ public class StaticUnitOfWork : IUnitOfWork
 
     public IOrderRepository OrderRepository => _orderRepository;
 
+    public IBidRepository BidRepository => throw new NotImplementedException();
+
     private void Dispose(bool disposing)
     {
 

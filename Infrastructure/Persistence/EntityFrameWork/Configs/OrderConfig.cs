@@ -22,34 +22,34 @@ public class OrderConfig : IEntityTypeConfiguration<Order>
             .HasConversion(id => id.Value, val => UserId.Create(val));
 
         builder.Property(o => o.ProviderId)
+            .ValueGeneratedNever()
             .HasConversion(id => id.Value, val => UserId.Create(val));
 
-        builder.OwnsMany(o => o.Bids, bb =>
+        builder.OwnsMany(o => o.BidIds, bb =>
         {
             bb.ToTable("Order-Bids");
             bb.WithOwner().HasForeignKey("OrderId");
-            bb.HasKey("Id", "OrderId");
+            bb.HasKey("Value", "OrderId");
 
-            bb.Property(o => o.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("BidId")
-                .HasConversion(id => id.Value, val => BidId.Create(val));
+            bb.Property(x => x.Value)
+                .ValueGeneratedNever();
         });
 
-        builder.Navigation(o => o.Bids)
-            .HasField("_bids")
+        builder.Navigation(o => o.BidIds)
+            .HasField("_bidIds")
             .UsePropertyAccessMode(PropertyAccessMode.Field);
 
-        builder.OwnsOne(o => o.AcceptedBid, ab =>
-        {
-            ab.ToTable("Order-AcceptedBid");
-            ab.WithOwner().HasForeignKey("BidId");
-            ab.HasKey("Id", "BidId");
+        //builder.OwnsOne(o => o.AcceptedBid, ab =>
+        //{
+        //    ab.ToTable("Order-AcceptedBid");
+        //    ab.WithOwner().HasForeignKey("BidId");
+        //    ab.HasKey(["Id", "BidId"]);
 
-            ab.Property(a => a.Id)
-                .ValueGeneratedNever()
-                .HasConversion(id => id.Value, val => BidId.Create(val));
+        //    ab.Property(a => a.Id)
+        //        .ValueGeneratedNever()
+        //        .HasConversion(id => id.Value, val => BidId.Create(val));
+        //});
 
-        });
+        builder.HasOne(o => o.AcceptedBid);
     }
 }

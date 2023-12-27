@@ -5,4 +5,4 @@ using OneOf;
 
 namespace Application.Users.Commands.AddBid;
 
-public record AddBidCommand(Guid OrderId, int ProposedAmount, string Comment) : IRequest<OneOf<BidResponse, IServiceError, ValidationErrors>>;
+public record AddBidCommand(Guid ProviderId, Guid OrderId, int ProposedAmount, string Comment) : IRequest<OneOf<BidResponse, IServiceError, ValidationErrors>>;

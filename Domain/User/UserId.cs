@@ -1,9 +1,11 @@
 ﻿using Domain.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.User;
 
 public class UserId : ValueObject
 {
+    [Key]
     public Guid Value { get; private set; }
 
     private UserId(Guid id)

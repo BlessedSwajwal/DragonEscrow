@@ -16,7 +16,9 @@ public class EOrderRepository(DragonEscrowDbContext _dbContext) : IOrderReposito
 
     public async Task<List<Order>> GetAllOrdersAsyncFromConsumerId(UserId id)
     {
-        var orders = await _dbContext.Orders.Where(o => o.ConsumerId == id).OrderBy(o => o.Status).ToListAsync();
+        var orders = await _dbContext.Orders.Where(o => o.ConsumerId == id)
+                                            .OrderBy(o => o.Status)
+                                            .ToListAsync();
         return orders;
     }
 

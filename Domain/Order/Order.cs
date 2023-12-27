@@ -1,4 +1,5 @@
-﻿using Domain.Common;
+﻿using Domain.Bids;
+using Domain.Common;
 using Domain.Order.Events;
 using Domain.Order.ValueObjects;
 using Domain.User;
@@ -18,8 +19,8 @@ public class Order : Entity<OrderId>
     public DateTime AcceptedDate { get; private set; } = DateTime.MinValue;
     public DateTime DeadLine => AcceptedDate.AddDays(AllowedDays);
     public DateTime CompletionDate { get; private set; } = DateTime.MinValue;
-    private List<Bid> _bids = [];
-    public IReadOnlyList<Bid> Bids => _bids;
+    private List<BidId> _bidIds = [];
+    public IReadOnlyList<BidId> BidIds => _bidIds.AsReadOnly();
     public Bid AcceptedBid { get; private set; } = Bid.Empty;
 
 
@@ -68,9 +69,9 @@ public class Order : Entity<OrderId>
         this.AddDomainEvent(new OrderAcceptedEvent(this, providerId));
     }
 
-    public void AddBid(Bid bid)
+    public void AddBid(BidId bid)
     {
-        _bids.Add(bid);
+        _bidIds.Add(bid);
     }
 
     public void MarkComplete()

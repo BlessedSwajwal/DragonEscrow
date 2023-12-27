@@ -1,11 +1,15 @@
-﻿using Application.Users.Commands.CreateProvider;
+﻿using Application.Users.Commands.AddBid;
+using Application.Users.Commands.CreateProvider;
 using Application.Users.Query.LoginProvider;
 using Contracts;
+using Domain.User;
+using Mapster;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Security.Claims;
 
 namespace API.Controllers;
 
@@ -46,6 +50,25 @@ public class ProvidersController : ControllerBase
 
         return response.Match(
                 userResponse => Ok(userResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpPost("CreateBid")]
+    public async Task<IActionResult> CreateBid(CreateBidRequest request)
+    {
+        if (User.FindFirstValue("UserType")!.ToLower() != UserType.PROVIDER.ToString().ToLower())
+        {
+            return Problem(title: "Invalid User type", detail: $"User type: {User.FindFirstValue("UserType")} can not create bid.");
+        }
+        var command = request.BuildAdapter()
+                            .AddParameters("ProviderId", User.FindFirstValue(ClaimTypes.NameIdentifier)!)
+                            .AdaptToType<AddBidCommand>();
+
+        var response = await _mediator.Send(command);
+
+        return response.Match(
+                bidresponse => Ok(bidresponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }

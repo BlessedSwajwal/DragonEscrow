@@ -14,6 +14,7 @@ public class OrderResponseConfig : IRegister
             .Map(dest => dest.CreatorId, src => src.ConsumerId.Value)
             .Map(dest => dest.ProviderId, src => src.ProviderId.Value)
             .Map(dest => dest.PaymentUri, src => MapContext.Current!.Parameters["PaymentUri"])
-            .Map(dest => dest.AcceptedBid, src => src.AcceptedBid);
+            .Map(dest => dest.AcceptedBid, src => src.AcceptedBid)
+            .Map(dest => dest.Bids, src => MapContext.Current!.Parameters["BidResponses"]);
     }
 }

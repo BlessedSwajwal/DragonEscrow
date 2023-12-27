@@ -1,6 +1,6 @@
 ﻿using Domain.Common;
 
-namespace Domain.Order.ValueObjects;
+namespace Domain.Bids;
 
 public class BidId : ValueObject
 {

@@ -12,6 +12,5 @@ public class OrderCreatedEventHandler(IUnitOfWork unitOfWork) : INotificationHan
         var consumer = await unitOfWork.ConsumerRepository.GetByIdAsync(notification.order.ConsumerId);
 
         consumer.AddOrder(notification.order.Id);
-        await unitOfWork.SaveAsync();
     }
 }

@@ -57,8 +57,14 @@ public class GetOrderDetailQueryHandler(
             url = await paymentUri.GetPaymentUriAsync(user, order);
         }
 
+        //Get orders bid
+        var bids = await unitOfWork.BidRepository.GetBidListAsync(order.BidIds);
+        //Generate Bid Response
+        var bidResponse = bids.Adapt<List<BidResponse>>();
+
         var orderResponse = order.BuildAdapter()
                                 .AddParameters("PaymentUri", url)
+                                .AddParameters("BidResponses", bidResponse)
                                 .AdaptToType<OrderResponse>();
 
         return orderResponse;

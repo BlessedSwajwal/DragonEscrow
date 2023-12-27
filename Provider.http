@@ -1,4 +1,6 @@
 @Address=https://localhost:7240/api/Provider
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI5ZjZjYjVlOC1mZTBlLTRhNDgtOTY1ZS1kZWE5ZGQwNjNhMmQiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYWphbDFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiU2FqYWwiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiR2hpbWlyZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL21vYmlsZXBob25lIjoiMTIzNDU2Nzg5MCIsImV4cCI6MTcwNDUxMzE2MiwiaXNzIjoiRHJhZ29uc0VzY3JvdyIsImF1ZCI6IkRyYWdvbnNFc2Nyb3cifQ.oULOi10fTKtp5fgkskq4xlRADlW0TRCxEM9kF24pCVA
+
 
 POST {{Address}}/register
 Content-Type: application/json
@@ -18,4 +20,15 @@ Content-Type: application/json
 {
   "email": "sajal1@gmail.com",
   "password": "Abc@@12abc"
+}
+
+###### Create a bid
+POST {{Address}}/CreateBid
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
+{
+    "OrderId": "f88867a7-13ce-442c-aeb7-4b995aead34e",
+    "ProposedAmount": 3000000,
+    "Comment": "Will use certified A-One materials."
 }
