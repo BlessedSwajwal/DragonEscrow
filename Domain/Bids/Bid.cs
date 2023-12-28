@@ -12,6 +12,7 @@ public class Bid : Entity<BidId>
     public OrderId OrderId { get; private set; }
     public int ProposedAmount { get; private set; }
     public string Comment { get; private set; }
+    public BidStatus BidStatus { get; private set; }
 
     private Bid(BidId id, UserId bidderId, int propesedAmount, string comment, OrderId orderId) : base(id)
     {
@@ -19,10 +20,16 @@ public class Bid : Entity<BidId>
         ProposedAmount = propesedAmount;
         Comment = comment;
         OrderId = orderId;
+        BidStatus = BidStatus.PENDING;
     }
 
     public static Bid Create(UserId bidderId, OrderId orderId, int proposedAmount, string comment)
     {
         return new Bid(BidId.CreateUnique(), bidderId, proposedAmount, comment, orderId);
+    }
+
+    public void MarkBidAccepted()
+    {
+        BidStatus = BidStatus.SELECTED;
     }
 }

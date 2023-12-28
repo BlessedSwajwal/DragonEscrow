@@ -11,6 +11,7 @@ public class BidMappingConfig : IRegister
         config.NewConfig<Bid, BidResponse>()
             .Map(dest => dest.BidId, src => src.Id.Value)
             .Map(dest => dest.ProposedAmount, src => src.ProposedAmount)
-            .Map(dest => dest.BidderId, src => src.BidderId.Value);
+            .Map(dest => dest.BidderId, src => src.BidderId.Value)
+            .Map(dest => dest.BidStatus, src => src.BidStatus.ToString());
     }
 }

@@ -2,6 +2,7 @@
 using Application.Orders.Command.CreateOrder;
 using Application.Orders.Command.VerifyPayment;
 using Application.Orders.Query.GetOrderDetail;
+using Application.Users.Commands.AcceptBid;
 using Contracts;
 using Domain.User;
 using Mapster;
@@ -66,6 +67,24 @@ public class OrdersController(ISender _mediator) : ControllerBase
         var response = await _mediator.Send(command);
         return response.Match(
                 orderResponse => Ok(orderResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpGet("{OrderId}/AcceptBid")]
+    public async Task<IActionResult> AcceptBid([FromRoute] Guid OrderId, [FromQuery] Guid BidId)
+    {
+        if (BidId.Equals(Guid.Empty)) return Problem(detail: "BidId must be specified.");
+        //if(Enum.Parse<UserType>(User.FindFirstValue("UserType")!) != UserType.CONSUMER)
+        //{
+        //    return Problem(detail: "Must be consumer to accept");
+        //}
+        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        var command = new AcceptBidCommand(userId, OrderId, BidId);
+        var response = await _mediator.Send(command);
+        return response.Match(
+                successResponse => Ok(successResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }

@@ -1,5 +1,5 @@
 @Address=https://localhost:7240/api/Provider
-@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI0NjEyZDc5Yy03M2RmLTRlZTgtODJmYy1hMTZlNDdkYjJiYmEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYWphbDFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiU2FqYWwiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiR2hpbWlyZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL21vYmlsZXBob25lIjoiMTIzNDU2Nzg5MCIsImV4cCI6MTcwNDUyOTM2MSwiaXNzIjoiRHJhZ29uc0VzY3JvdyIsImF1ZCI6IkRyYWdvbnNFc2Nyb3cifQ.KUs7MZyFTK6J9C9UcsbDGxz8PAEpDHQhyPa1E5k8Qvs
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIzMDJmMWJkZS1kNGE1LTRlMjAtYWNkOC1hN2QzNWEzMWI5MDMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYWphbDExQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6IlNhamFsIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkdoaW1pcmUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6IjEyMzQ1Njc4OTAiLCJleHAiOjE3MDQ2MTk0MDMsImlzcyI6IkRyYWdvbnNFc2Nyb3ciLCJhdWQiOiJEcmFnb25zRXNjcm93In0.5DbAce6xGCXXBSTk0ff741syTFKd8vBYrgD1Esswj44
 
 
 POST {{Address}}/register
@@ -8,7 +8,7 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "sajal1@gmail.com",
+  "email": "sajal11@gmail.com",
   "phone": "1234567890",
   "password": "Abc@@12abc"
 }
@@ -28,7 +28,7 @@ Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-    "OrderId": "a800b536-6b8f-4f04-870f-681366d4e1a4",
-    "ProposedAmount": 3000000,
+    "OrderId": "5a35efb3-03eb-442d-b22b-99eb6779d03f",
+    "ProposedAmount": 300000,
     "Comment": "Will use certified A-One materials."
 }

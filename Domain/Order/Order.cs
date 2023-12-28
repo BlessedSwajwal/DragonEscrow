@@ -12,7 +12,8 @@ public class Order : Entity<OrderId>
     public string Name { get; private set; }
     public string Description { get; private set; }
     public int Cost { get; private set; }
-    public OrderStatus Status { get; private set; } = OrderStatus.PENDING;
+    //TODO: change this to OrderStatus.PENDING. Khalti not working for now.
+    public OrderStatus Status { get; private set; } = OrderStatus.CREATED;
     public UserId ConsumerId { get; private set; }
     public int AllowedDays { get; private set; }
     public UserId ProviderId { get; private set; } = UserId.Create(Guid.Empty);
@@ -80,9 +81,10 @@ public class Order : Entity<OrderId>
         //TODO: Order created event
     }
 
-    public void AcceptBid(Order order, BidId bid)
+    public void AcceptBid(BidId bid)
     {
-        order.AcceptedBidId = bid;
+        AcceptedBidId = bid;
+        AcceptedDate = DateTime.UtcNow;
     }
     private Order() { }
 }

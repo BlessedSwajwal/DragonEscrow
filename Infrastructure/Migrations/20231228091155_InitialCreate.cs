@@ -19,7 +19,8 @@ namespace Infrastructure.Migrations
                     BidderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProposedAmount = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BidStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

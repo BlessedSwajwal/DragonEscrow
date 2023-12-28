@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DragonEscrowDbContext))]
-    [Migration("20231227075556_InitialCreate")]
+    [Migration("20231228091155_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -29,6 +29,9 @@ namespace Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("BidStatus")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("BidderId")
                         .HasColumnType("uniqueidentifier");

@@ -27,6 +27,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("BidStatus")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("BidderId")
                         .HasColumnType("uniqueidentifier");
 
