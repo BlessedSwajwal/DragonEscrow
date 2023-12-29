@@ -28,6 +28,13 @@ public class AddBidCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<AddB
             return new InvalidCredentialsError();
         }
 
+        // Check if provider has already bidded for the order.
+        bool providerAlreadyBidded = await unitOfWork.ProviderRepository.CheckIfAlreadyBiddedAsync(provider.Id, order.Id);
+
+        if (providerAlreadyBidded)
+        {
+            return new AlreadyBiddedError();
+        }
 
         var bid = Bid.Create(provider.Id, order.Id, request.ProposedAmount, request.Comment);
         order.AddBid(bid.Id);

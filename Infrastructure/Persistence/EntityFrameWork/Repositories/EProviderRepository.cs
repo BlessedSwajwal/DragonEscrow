@@ -1,4 +1,5 @@
 ﻿using Application.Common.Repositories;
+using Domain.Order.ValueObjects;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,14 @@ public class EProviderRepository : IProviderRepository
     {
         await _dbContext.Providers.AddAsync(provider);
         return provider;
+    }
+
+    public async Task<bool> CheckIfAlreadyBiddedAsync(UserId userId, OrderId orderId)
+    {
+        var user = await _dbContext.Providers.FindAsync(userId);
+        if (user is null) return true;
+        if (user.AcceptedOrders.Contains(orderId)) return true;
+        return false;
     }
 
     public async Task<Provider> GetByEmail(string email)

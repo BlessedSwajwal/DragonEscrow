@@ -81,10 +81,12 @@ public class Order : Entity<OrderId>
         //TODO: Order created event
     }
 
+    //TODO: should be called in event handler. Event should be raised after bid was accepted.
     public void AcceptBid(BidId bid)
     {
         AcceptedBidId = bid;
         AcceptedDate = DateTime.UtcNow;
+        Status = OrderStatus.PROCESSING;
     }
     private Order() { }
 }

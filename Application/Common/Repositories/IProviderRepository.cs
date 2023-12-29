@@ -1,10 +1,12 @@
-﻿using Domain.User;
+﻿using Domain.Order.ValueObjects;
+using Domain.User;
 
 namespace Application.Common.Repositories;
 
 public interface IProviderRepository
 {
     Task<Provider> AddProvider(Provider provider);
+    Task<bool> CheckIfAlreadyBiddedAsync(UserId userId, OrderId orderId);
     Task<Provider> GetByEmail(string email);
     Task<Provider> GetByIdAsync(UserId id);
 }

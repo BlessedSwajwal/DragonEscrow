@@ -25,6 +25,11 @@ public class AcceptBidCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<A
         var bid = await unitOfWork.BidRepository.GetBidByIdAsync(BidId.Create(request.BidId));
         if (bid.Equals(Bid.Empty) || bid.OrderId != OrderId.Create(request.OrderId)) return new BidNotFoundError();
 
+        //Check if the status is created. Else the bid can not be accepted.
+        if (!order.Status.Equals(OrderStatus.CREATED))
+        {
+            return new BidCannotAcceptError(order.Status.ToString());
+        }
         //TODO: Event handlers.
         order.AcceptBid(bid.Id);
         await unitOfWork.BidRepository.MarkBidSelected(order.Id, bid.Id);
