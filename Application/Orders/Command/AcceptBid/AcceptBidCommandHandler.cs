@@ -10,7 +10,7 @@ using OneOf.Types;
 
 namespace Application.Users.Commands.AcceptBid;
 
-public class AcceptBidCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<AcceptBidCommand, OneOf<Success, IServiceError, ValidationErrors>>
+public class AcceptBidCommandHandler(IUnitOfWork unitOfWork, IEmailSenderService emailSenderService) : IRequestHandler<AcceptBidCommand, OneOf<Success, IServiceError, ValidationErrors>>
 {
     public async Task<OneOf<Success, IServiceError, ValidationErrors>> Handle(AcceptBidCommand request, CancellationToken cancellationToken)
     {
@@ -30,10 +30,15 @@ public class AcceptBidCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<A
         {
             return new BidCannotAcceptError(order.Status.ToString());
         }
+
+        var provider = await unitOfWork.ProviderRepository.GetByIdAsync(bid.BidderId);
         //TODO: Event handlers.
         order.AcceptBid(bid.Id);
         await unitOfWork.BidRepository.MarkBidSelected(order.Id, bid.Id);
         await unitOfWork.SaveAsync();
+
+        emailSenderService.SendBidAcceptedEmail(provider, order, bid);
+
         return new Success();
     }
 }

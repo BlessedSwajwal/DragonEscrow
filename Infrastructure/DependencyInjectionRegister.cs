@@ -25,6 +25,10 @@ public static class DependencyInjectionRegister
 
         services.AddSingleton<IConfiguration>(configuration);
 
+        //Email
+        services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
+        services.AddSingleton<IEmailSenderService, EmailSenderService>();
+
         return services;
     }
 
