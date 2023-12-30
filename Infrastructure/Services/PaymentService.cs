@@ -21,6 +21,7 @@ public class PaymentService : IPaymentService
     {
         Object payload = new
         {
+            //TODO: Change the return url.
             return_url = $"https://localhost:7240/api/Order/paymentCallback/{order.Id.Value}",
             website_url = "https://example.com/",
             amount = order.Cost,
@@ -52,7 +53,7 @@ public class PaymentService : IPaymentService
     {
         Object payload = new
         {
-            pidx = pidx
+            pidx
         };
 
         var payloadJson = JsonSerializer.Serialize(payload);

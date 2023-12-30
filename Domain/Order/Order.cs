@@ -22,7 +22,6 @@ public class Order : Entity<OrderId>
     public DateTime CompletionDate { get; private set; } = DateTime.MinValue;
     private List<BidId> _bidIds = [];
     public IReadOnlyList<BidId> BidIds => _bidIds.AsReadOnly();
-    //public Bid? AcceptedBid { get; private set; }
     public BidId? AcceptedBidId { get; private set; }
 
     private Order(OrderId id, string name, string description, int cost, UserId consumerId, int allowedDays) : base(id)
@@ -82,9 +81,10 @@ public class Order : Entity<OrderId>
     }
 
     //TODO: should be called in event handler. Event should be raised after bid was accepted.
-    public void AcceptBid(BidId bid)
+    public void AcceptBid(Bid bid)
     {
-        AcceptedBidId = bid;
+        AcceptedBidId = bid.Id;
+        ProviderId = bid.BidderId;
         AcceptedDate = DateTime.UtcNow;
         Status = OrderStatus.PROCESSING;
     }

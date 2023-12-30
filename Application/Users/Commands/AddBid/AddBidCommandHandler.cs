@@ -16,6 +16,10 @@ public class AddBidCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<AddB
     public async Task<OneOf<BidResponse, IServiceError, ValidationErrors>> Handle(AddBidCommand request, CancellationToken cancellationToken)
     {
         var order = await unitOfWork.OrderRepository.GetOrderByIdAsync(OrderId.Create(request.OrderId));
+        if (order.Equals(Order.Empty))
+        {
+            return new OrderNotFoundError();
+        }
 
         if (!order.Status.Equals(OrderStatus.CREATED))
         {
