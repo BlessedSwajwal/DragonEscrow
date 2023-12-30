@@ -21,7 +21,7 @@ public class AddBidCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<AddB
             return new OrderNotFoundError();
         }
 
-        if (!order.Status.Equals(OrderStatus.CREATED))
+        if (!order.OrderStatus.Equals(OrderStatusConstants.CREATED))
         {
             return new OrderAccessDenied();
         }

@@ -10,7 +10,7 @@ public class AllOrderResponseConfig : IRegister
     {
         config.NewConfig<Order, AllOrderResponse>()
             .Map(dest => dest.Id, src => src.Id.Value)
-            .Map(dest => dest.OrderStatus, src => src.Status.ToString())
+            .Map(dest => dest.OrderStatus, src => src.OrderStatus)
             .Map(dest => dest.CreatorId, src => src.ConsumerId.Value)
             .Map(dest => dest.ProviderId, src => src.ProviderId.Value)
             .Map(dest => dest.AcceptedBid, src => src.AcceptedBidId.Value)

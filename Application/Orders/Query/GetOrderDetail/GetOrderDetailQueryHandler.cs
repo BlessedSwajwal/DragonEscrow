@@ -44,14 +44,15 @@ public class GetOrderDetailQueryHandler(
         var url = "";
 
         //Payment url only if the creator sent the request. Provider can also view the order but do not require payment Url.
-        if (order.Status == OrderStatus.CANCELLED)
+        if (order.OrderStatus.ToLower().Equals(OrderStatusConstants.CANCELLED))
         {
             url = "Order has already been cancelled.";
         }
-        else if (order.Status != OrderStatus.PENDING)
+        else if (!order.OrderStatus.ToLower().Equals(OrderStatusConstants.PENDING))
         {
-            url = "Already paid.";
+            url = $"Order Status: {order.OrderStatus.ToUpper()}";
         }
+        //Checking the requesting user is infact the creator of the order.
         else if (request.User.FindFirst(ClaimTypes.NameIdentifier)!.Value == order.ConsumerId.Value.ToString())
         {
             url = await paymentUri.GetPaymentUriAsync(user, order);

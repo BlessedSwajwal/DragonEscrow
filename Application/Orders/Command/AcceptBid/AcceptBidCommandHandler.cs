@@ -30,9 +30,9 @@ public class AcceptBidCommandHandler(IUnitOfWork unitOfWork, IEmailSenderService
 
         //Check if the status is created. Else the bid can not be accepted.
 
-        if (!order.Status.Equals(OrderStatus.CREATED))
+        if (!order.OrderStatus.ToLower().Equals(OrderStatusConstants.CREATED))
         {
-            return new BidCannotAcceptError(order.Status.ToString());
+            return new BidCannotAcceptError(order.OrderStatus.ToString());
         }
 
         var provider = await unitOfWork.ProviderRepository.GetByIdAsync(bid.BidderId);

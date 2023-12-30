@@ -10,7 +10,7 @@ public class OrderResponseConfig : IRegister
     {
         config.NewConfig<Order, OrderResponse>()
             .Map(dest => dest.Id, src => src.Id.Value)
-            .Map(dest => dest.OrderStatus, src => src.Status.ToString())
+            .Map(dest => dest.OrderStatus, src => src.OrderStatus)
             .Map(dest => dest.CreatorId, src => src.ConsumerId.Value)
             .Map(dest => dest.ProviderId, src => src.ProviderId.Value)
             .Map(dest => dest.PaymentUri, src => MapContext.Current!.Parameters["PaymentUri"])

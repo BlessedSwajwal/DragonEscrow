@@ -21,9 +21,9 @@ public class VerifyPaymentCommandHandler(IUnitOfWork unitOfWork, IPaymentService
         //Check payment status
         PaymentConfirmation paymentConfirmation = await paymentService.VerifyPayment(request.Pidx);
 
-        if (paymentConfirmation.Status == "Completed" && order.Status == OrderStatus.PENDING)
+        if (paymentConfirmation.Status == "Completed" && order.OrderStatus.ToLower().Equals(OrderStatusConstants.PENDING))
         {
-            order.ChangeStatus(OrderStatus.CREATED);
+            order.ChangeStatus(OrderStatusConstants.CREATED);
             await unitOfWork.SaveAsync();
         }
 

@@ -13,7 +13,7 @@ public class Order : Entity<OrderId>
     public string Description { get; private set; }
     public int Cost { get; private set; }
     //TODO: change this to OrderStatus.PENDING. Khalti not working for now.
-    public OrderStatus Status { get; private set; } = OrderStatus.CREATED;
+    public string OrderStatus { get; private set; } = OrderStatusConstants.CREATED;
     public UserId ConsumerId { get; private set; }
     public int AllowedDays { get; private set; }
     public UserId ProviderId { get; private set; } = UserId.Create(Guid.Empty);
@@ -52,9 +52,9 @@ public class Order : Entity<OrderId>
     /// Change status of the order
     /// </summary>
     /// <param name="status"></param>
-    public void ChangeStatus(OrderStatus status)
+    public void ChangeStatus(string status)
     {
-        Status = status;
+        OrderStatus = status;
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public class Order : Entity<OrderId>
         AcceptedBidId = bid.Id;
         ProviderId = bid.BidderId;
         AcceptedDate = DateTime.UtcNow;
-        Status = OrderStatus.PROCESSING;
+        OrderStatus = OrderStatusConstants.PROCESSING;
     }
     private Order() { }
 }

@@ -19,11 +19,11 @@ public class AcceptOrderCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) :
         if (order.Equals(Order.Empty)) return new OrderNotFoundError();
 
         //If the order is not in created status, can not be accepted error
-        if (order.Status != OrderStatus.CREATED) return new OrderAccessDenied();
+        if (!order.OrderStatus.ToLower().Equals(OrderStatusConstants.CREATED)) return new OrderAccessDenied();
 
         //Update the order
         order.AssignProvider(UserId.Create(request.ProviderId));
-        order.ChangeStatus(OrderStatus.PROCESSING);
+        order.ChangeStatus(OrderStatusConstants.PROCESSING);
         await unitOfWork.SaveAsync();
 
         var orderResponse = order.BuildAdapter()
