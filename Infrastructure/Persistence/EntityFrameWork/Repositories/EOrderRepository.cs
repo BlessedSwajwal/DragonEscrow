@@ -22,6 +22,13 @@ public class EOrderRepository(DragonEscrowDbContext _dbContext) : IOrderReposito
         return orders;
     }
 
+    public async Task<List<Order>> GetCreatedOrders()
+    {
+        var orders = _dbContext.Orders.Where(o => o.OrderStatus.ToLower().Equals(OrderStatusConstants.CREATED))
+                                .OrderByDescending(o => o.Cost);
+        return await orders.ToListAsync();
+    }
+
     public async Task<Order> GetOrderByIdAsync(OrderId id)
     {
         var order = await _dbContext.Orders.FirstOrDefaultAsync(o => o.Id == id);

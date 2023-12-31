@@ -1,4 +1,4 @@
-﻿namespace Application.Orders.Query.GetAllConsumerOrders;
+﻿namespace Application.Orders;
 
 public record AllOrderResponse(Guid Id,
     string Name,

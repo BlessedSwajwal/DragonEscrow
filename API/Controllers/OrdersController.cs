@@ -1,6 +1,7 @@
 ﻿using Application.Orders.Command.AcceptOrder;
 using Application.Orders.Command.CreateOrder;
 using Application.Orders.Command.VerifyPayment;
+using Application.Orders.Query.GetCreatedOrders;
 using Application.Orders.Query.GetOrderDetail;
 using Application.Users.Commands.AcceptBid;
 using Contracts;
@@ -18,6 +19,26 @@ namespace API.Controllers;
 [ApiController]
 public class OrdersController(ISender _mediator) : ControllerBase
 {
+    /// <summary>
+    /// Only providers should call this endpoint. Gets all the order that has status 'CREATED' allowing 
+    ///     providers to know what to bid on.
+    /// </summary>
+    /// <returns>List of orders with status 'Created' sorted with price.</returns>
+    [HttpGet]
+    public async Task<IActionResult> GetCreatedOrders()
+    {
+        //Check if the user is actually provider. If not return problem unauthorized.
+        if (User.FindFirstValue("UserType")! != UserType.PROVIDER.ToString().ToUpper())
+            return Problem(detail: "Only providers can check all created orders.");
+
+        var query = new GetCreatedOrderQuery();
+        var response = await _mediator.Send(query);
+        return response.Match(
+                ordersResponse => Ok(ordersResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage)
+                );
+    }
+
     [HttpPost("create")]
     public async Task<IActionResult> CreateOrder(CreateOrderRequest request)
     {

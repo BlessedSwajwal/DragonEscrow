@@ -27,7 +27,7 @@ public class EmailSenderService : IEmailSenderService
         email.To.Add(MailboxAddress.Parse(provider.Email));
 
         email.Subject = "Bid accepted";
-        email.Body = new TextPart(TextFormat.Plain) { Text = $"Congratulations. Your bid on the order titled {order.Name} has been accepted. Your proposed amount was: {bid.ProposedAmount}. Deadline: {order.DeadLine}" };
+        email.Body = new TextPart(TextFormat.Plain) { Text = $"Congratulations. Your bid on the order titled '{order.Name}' has been accepted. Your proposed amount was: Nrs. {bid.ProposedAmount / 100}. Deadline: {order.DeadLine} UTC." };
 
         using var smtp = new SmtpClient();
         await smtp.ConnectAsync(EmailSettings.Host, EmailSettings.Port, MailKit.Security.SecureSocketOptions.StartTls);

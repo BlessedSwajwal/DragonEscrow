@@ -10,4 +10,5 @@ public interface IOrderRepository
     Task<Order> GetOrderByIdAsync(OrderId id);
 
     Task<List<Order>> GetAllOrdersAsyncFromConsumerId(UserId id);
+    Task<List<Order>> GetCreatedOrders();
 }
