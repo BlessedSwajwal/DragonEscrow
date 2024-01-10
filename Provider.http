@@ -1,5 +1,5 @@
 @Address=https://localhost:7240/api/Provider
-@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIwOGFiZDc1Ni1iOTkyLTRiNzktOTI3MC0zZmY0MWVlMzQ3ZDciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYWphbHVqQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6IlNhamFsIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkdoaW1pcmUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6IjEyMzQ1Njc4OTAiLCJleHAiOjE3MDU2Nzc3MTIsImlzcyI6IkRyYWdvbnNFc2Nyb3ciLCJhdWQiOiJEcmFnb25zRXNjcm93In0.h3-XF5L0zXyIe1ZoVOy6Fpi4fFI9Cn9aBNPWUz2YIf8
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJiZGRjOTdkZC05MTExLTQwOTEtYWNlYi1jMTc3NTM2ZTljM2YiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwcm92aWRlckBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNzA1NzUxNjY4LCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.fBgbCnhaqiA9KLd5psHyq-zLT8gDvKDbQi7HY8ZXxzQ
 
 POST {{Address}}/register
 Content-Type: application/json
@@ -7,17 +7,17 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "sajalujyt@gmail.com",
+  "email": "provider@gmail.com",
   "phone": "1234567890",
   "password": "Abc@@12abc"
 }
 
-####### Login as consumer
+####### Login as provider
 POST {{Address}}/login
 Content-Type: application/json
 
 {
-  "email": "sajaluj@gmail.com",
+  "email": "provider@gmail.com",
   "password": "Abc@@12abc"
 }
 
@@ -27,7 +27,12 @@ Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-    "OrderId": "6a0b44dc-c6b3-41fa-bbd5-12e89b6d21fb",
+    "OrderId": "c1a4ce5f-7b86-48d9-b252-f18e75749656",
     "ProposedAmount": 200000,
     "Comment": "Will be using A1 materials."
 }
+
+
+#### Get All Selected bids
+GET {{Address}}/GetSelectedBids
+Authorization: Bearer {{Token}}

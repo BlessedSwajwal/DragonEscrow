@@ -1,5 +1,6 @@
 ﻿using Application.Users.Commands.AddBid;
 using Application.Users.Commands.CreateProvider;
+using Application.Users.Query.BidSelectedOrders;
 using Application.Users.Query.LoginProvider;
 using Contracts;
 using Domain.User;
@@ -57,7 +58,8 @@ public class ProvidersController : ControllerBase
     [HttpPost("CreateBid")]
     public async Task<IActionResult> CreateBid(CreateBidRequest request)
     {
-        if (User.FindFirstValue("UserType")!.ToLower() != UserType.PROVIDER.ToString().ToLower())
+        //User.FindFirstValue("UserType")!.ToLower() != UserType.PROVIDER.ToString().ToLower()
+        if (!User.FindFirstValue("UserType").Equals(UserType.PROVIDER.ToString(), StringComparison.CurrentCultureIgnoreCase))
         {
             return Problem(title: "Invalid User type", detail: $"User type: {User.FindFirstValue("UserType")} can not create bid.");
         }
@@ -66,6 +68,20 @@ public class ProvidersController : ControllerBase
                             .AdaptToType<AddBidCommand>();
 
         var response = await _mediator.Send(command);
+
+        return response.Match(
+                bidresponse => Ok(bidresponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpGet("GetSelectedBids")]
+    public async Task<IActionResult> GetAllSelectedBids()
+    {
+        var consumerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var query = new BidsSelectedQuery(consumerId);
+
+        var response = await _mediator.Send(query);
 
         return response.Match(
                 bidresponse => Ok(bidresponse),

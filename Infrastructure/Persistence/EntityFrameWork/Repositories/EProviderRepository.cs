@@ -1,4 +1,5 @@
 ﻿using Application.Common.Repositories;
+using Domain.Order;
 using Domain.Order.ValueObjects;
 using Domain.User;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,13 @@ public class EProviderRepository : IProviderRepository
         if (user is null) return true;
         if (user.AcceptedOrders.Contains(orderId)) return true;
         return false;
+    }
+
+    public async Task<IReadOnlyList<Order>> GetConsumersOrder(UserId id)
+    {
+        var orders = await _dbContext.Orders.Where(o => o.ProviderId == id)
+                                        .ToListAsync();
+        return orders;
     }
 
     public async Task<Provider> GetByEmail(string email)

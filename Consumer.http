@@ -7,7 +7,7 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "sa@gmail.com",
+  "email": "consumer@gmail.com",
   "phone": "1234567890",
   "password": "Ab@12abc"
 }
@@ -17,7 +17,7 @@ POST {{Address}}/login
 Content-Type: application/json
 
 {
-  "email": "sa@gmail.com",
+  "email": "consumer@gmail.com",
   "password": "Ab@12abc"
 }
 

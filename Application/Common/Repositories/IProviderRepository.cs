@@ -1,4 +1,5 @@
-﻿using Domain.Order.ValueObjects;
+﻿using Domain.Order;
+using Domain.Order.ValueObjects;
 using Domain.User;
 
 namespace Application.Common.Repositories;
@@ -9,4 +10,6 @@ public interface IProviderRepository
     Task<bool> CheckIfAlreadyBiddedAsync(UserId userId, OrderId orderId);
     Task<Provider> GetByEmail(string email);
     Task<Provider> GetByIdAsync(UserId id);
+
+    Task<IReadOnlyList<Order>> GetConsumersOrder(UserId id);
 }
