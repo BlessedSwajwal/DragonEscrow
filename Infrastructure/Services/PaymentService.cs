@@ -22,7 +22,8 @@ public class PaymentService : IPaymentService
         Object payload = new
         {
             //TODO: Change the return url.
-            return_url = $"https://localhost:7240/api/Order/paymentCallback/{order.Id.Value}",
+            return_url = $"https://skskkc9d-7240.asse.devtunnels.ms/api/Order/paymentCallback",
+
             website_url = "https://example.com/",
             amount = order.Cost,
             purchase_order_id = order.Id.Value.ToString(),

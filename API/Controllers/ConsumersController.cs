@@ -25,6 +25,13 @@ public class ConsumersController : ControllerBase
         _mapper = mapper;
     }
 
+    [HttpGet("hello")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Check()
+    {
+        return Ok("Connected");
+    }
+
     [HttpPost("register")]
     [AllowAnonymous]
     public async Task<IActionResult> CreateUser(CreateUserRequest request)
@@ -44,6 +51,8 @@ public class ConsumersController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginUserRequest request)
     {
+        //TODO: remove
+        Console.WriteLine("Request intercepted.");
         var query = _mapper.Map<LoginConsumerQuery>(request);
 
         var response = await _mediator.Send(query);

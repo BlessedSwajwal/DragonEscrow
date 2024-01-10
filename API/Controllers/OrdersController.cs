@@ -66,7 +66,7 @@ public class OrdersController(ISender _mediator) : ControllerBase
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }
 
-    [HttpGet("paymentCallback/{orderId}")]
+    [HttpGet("paymentCallback")]
     [AllowAnonymous]
     public async Task<IActionResult> VerifyPayment([FromQuery] string pidx, [FromQuery] Guid purchase_order_id)
     {

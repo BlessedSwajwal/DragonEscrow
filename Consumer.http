@@ -1,6 +1,5 @@
 @Address=https://localhost:7240/api/Consumer
-@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IkNPTlNVTUVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJkOWYwODRkOC01Nzk3LTQ2ZGUtYTVhOS1jZmI2ZmQ4N2Q4NGIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJjb25zdW1lckBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNzA0ODAyMTkwLCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.KyO2N_yWkh1BeenyJZq5oZP-QWDWxP6ozFM-GKgv2So
-
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IkNPTlNVTUVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIzZTllMmVhNi1jYzI0LTRjMGYtOWI3MS1mMGU4OTk3OGQ4NTgiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYUBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNzA1Njc3NjI1LCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.rdazrFvRTcQ8kY6UBdMNMO_I3x8YA8zTKCwWYcak8N0
 
 POST {{Address}}/register
 Content-Type: application/json
@@ -8,9 +7,9 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "consumer@gmail.com",
+  "email": "sa@gmail.com",
   "phone": "1234567890",
-  "password": "Abc@@12abc"
+  "password": "Ab@12abc"
 }
 
 ####### Login as consumer
@@ -18,8 +17,8 @@ POST {{Address}}/login
 Content-Type: application/json
 
 {
-  "email": "sajal@gmail.com",
-  "password": "Abc@@12abc"
+  "email": "sa@gmail.com",
+  "password": "Ab@12abc"
 }
 
 ######### GET ALL CONSUMERS ORDER
