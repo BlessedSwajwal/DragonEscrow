@@ -7,7 +7,7 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "provider@gmail.com",
+  "email": "provider1@gmail.com",
   "phone": "1234567890",
   "password": "Abc@@12abc"
 }
@@ -27,8 +27,8 @@ Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-    "OrderId": "c1a4ce5f-7b86-48d9-b252-f18e75749656",
-    "ProposedAmount": 200000,
+    "OrderId": "6e13b6c5-b2d3-4b20-ba6c-7732e557a23c",
+    "ProposedAmount": 2000,
     "Comment": "Will be using A1 materials."
 }
 

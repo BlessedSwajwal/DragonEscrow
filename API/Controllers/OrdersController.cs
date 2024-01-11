@@ -1,6 +1,6 @@
 ﻿using Application.Orders.Command.AcceptOrder;
 using Application.Orders.Command.CreateOrder;
-using Application.Orders.Command.VerifyPayment;
+using Application.Orders.Command.VerifyBidPayment;
 using Application.Orders.Query.GetCreatedOrders;
 using Application.Orders.Query.GetOrderDetail;
 using Application.Users.Commands.AcceptBid;
@@ -66,17 +66,31 @@ public class OrdersController(ISender _mediator) : ControllerBase
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }
 
+    //[HttpGet("paymentCallback")]
+    //[AllowAnonymous]
+    //public async Task<IActionResult> VerifyPayment([FromQuery] string pidx, [FromQuery] Guid purchase_order_id)
+    //{
+    //    var command = new VerifyPaymentCommand(purchase_order_id, pidx);
+    //    var response = await _mediator.Send(command);
+    //    return response.Match(
+    //            orderResponse => Ok(orderResponse),
+    //            serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+    //            ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    //}
+
     [HttpGet("paymentCallback")]
     [AllowAnonymous]
-    public async Task<IActionResult> VerifyPayment([FromQuery] string pidx, [FromQuery] Guid purchase_order_id)
+    public async Task<IActionResult> VerifyBidPayment([FromQuery] string pidx, [FromQuery] Guid purchase_order_id, [FromQuery] Guid purchase_order_name)
     {
-        var command = new VerifyPaymentCommand(purchase_order_id, pidx);
+        //Purchase_order_name is bidId because bid was what was technically "purchased".
+        var command = new VerifyBidPaymentCommand(pidx, purchase_order_id, purchase_order_name);
         var response = await _mediator.Send(command);
         return response.Match(
-                orderResponse => Ok(orderResponse),
+                orderResponse => Ok("Bid Accepted."),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }
+
 
     [HttpGet("Accept/{orderId}")]
     public async Task<IActionResult> AcceptOrder([FromRoute] Guid orderId)
@@ -105,7 +119,7 @@ public class OrdersController(ISender _mediator) : ControllerBase
         var command = new AcceptBidCommand(userId, OrderId, BidId);
         var response = await _mediator.Send(command);
         return response.Match(
-                successResponse => Ok(successResponse),
+                paymentUriResponse => Ok(paymentUriResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }

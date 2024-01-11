@@ -22,7 +22,7 @@ public class PaymentService : IPaymentService
         Object payload = new
         {
             //TODO: Change the return url.
-            return_url = $"https://skskkc9d-7240.asse.devtunnels.ms/api/Order/paymentCallback",
+            return_url = $"https://skskkc9d-7240.asse.devtunnels.ms/api/Order/bidPaymentCallback",
 
             website_url = "https://example.com/",
             amount = order.Cost,
@@ -50,6 +50,37 @@ public class PaymentService : IPaymentService
 
     }
 
+    public async Task<string> GetPaymentUriAsync(Object user, int amount, Order order, Guid bidId)
+    {
+        Object payload = new
+        {
+            //TODO: Change the return url.
+            return_url = $"https://skskkc9d-7240.asse.devtunnels.ms/api/Order/paymentCallback",
+
+            website_url = "https://example.com/",
+            amount,
+            purchase_order_id = order.Id.Value.ToString(),
+            purchase_order_name = bidId.ToString(),
+        };
+
+        var payloadJson = JsonSerializer.Serialize(payload);
+        var payloadString = new StringContent(payloadJson, Encoding.UTF8, "application/json");
+
+
+        var response = await httpClient.PostAsync("epayment/initiate/", payloadString);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            await Console.Out.WriteLineAsync(await response.Content.ReadAsStringAsync());
+            throw new Exception("Can not get payment Uri");
+        }
+
+        await Console.Out.WriteLineAsync(await response.Content.ReadAsStringAsync());
+
+        var result = await response.Content.ReadFromJsonAsync<PaymentUriResponse>();
+        return result.payment_url;
+
+    }
     public async Task<PaymentConfirmation> VerifyPayment(string pidx)
     {
         Object payload = new

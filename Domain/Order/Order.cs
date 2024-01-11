@@ -13,7 +13,7 @@ public class Order : Entity<OrderId>
     public string Description { get; private set; }
     public int Cost { get; private set; }
     //TODO: change this to OrderStatus.PENDING. Khalti not working for now.
-    public string OrderStatus { get; private set; } = OrderStatusConstants.PENDING;
+    public string OrderStatus { get; private set; } = OrderStatusConstants.CREATED;
     public UserId ConsumerId { get; private set; }
     public int AllowedDays { get; private set; }
     public UserId ProviderId { get; private set; } = UserId.Create(Guid.Empty);
