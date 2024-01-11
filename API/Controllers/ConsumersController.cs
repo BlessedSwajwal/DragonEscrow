@@ -1,5 +1,6 @@
 ﻿using Application.Orders.Query.GetAllConsumerOrders;
 using Application.Users.Commands.CreateConsumer;
+using Application.Users.Query.ConsumerDetail;
 using Application.Users.Query.LoginConsumer;
 using Contracts;
 using MapsterMapper;
@@ -71,6 +72,18 @@ public class ConsumersController : ControllerBase
         var response = await _mediator.Send(query);
         return response.Match(
                 orderResponse => Ok(orderResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpGet("details")]
+    public async Task<IActionResult> GetUserDetail()
+    {
+        var consumerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var query = new ConsumerDetailQuery(consumerId);
+        var response = await _mediator.Send(query);
+        return response.Match(
+                consumerResponse => Ok(consumerResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }
