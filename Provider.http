@@ -1,5 +1,5 @@
 @Address=https://localhost:7240/api/Provider
-@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJiZGRjOTdkZC05MTExLTQwOTEtYWNlYi1jMTc3NTM2ZTljM2YiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwcm92aWRlckBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNzA1NzUxNjY4LCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.fBgbCnhaqiA9KLd5psHyq-zLT8gDvKDbQi7HY8ZXxzQ
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI5OWI2MTc2Ny0yNTYzLTRiYTEtYTg5My02NTY1YzRjM2VmYWEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwcm92aWRlcjFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiU2FqYWwiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiR2hpbWlyZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL21vYmlsZXBob25lIjoiMTIzNDU2Nzg5MCIsImV4cCI6MTcwNTkxMzAwNiwiaXNzIjoiRHJhZ29uc0VzY3JvdyIsImF1ZCI6IkRyYWdvbnNFc2Nyb3cifQ.CgWmv7vkgMORVoItg9UEX_ZQpwrPo_tkGvMiA8qkfhk
 
 POST {{Address}}/register
 Content-Type: application/json
@@ -7,7 +7,7 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "provider1@gmail.com",
+  "email": "provider4@gmail.com",
   "phone": "1234567890",
   "password": "Abc@@12abc"
 }
@@ -17,9 +17,13 @@ POST {{Address}}/login
 Content-Type: application/json
 
 {
-  "email": "provider@gmail.com",
+  "email": "provider1@gmail.com",
   "password": "Abc@@12abc"
 }
+
+##### Provider detail
+GET {{Address}}/details
+Authorization: Bearer {{Token}}
 
 ###### Create a bid
 POST {{Address}}/CreateBid
@@ -36,3 +40,26 @@ Content-Type: application/json
 #### Get All Selected bids
 GET {{Address}}/GetSelectedBids
 Authorization: Bearer {{Token}}
+
+
+
+
+### Generate Khalti payment Uri
+
+POST https://a.khalti.com/api/v2/epayment/initiate/
+Content-Type: application/json
+Authorization: key live_secret_key_68791341fdd94846a146f0457ff7b455
+
+{
+  "return_url": "https://docs.khalti.com/khalti-epayment/",
+  "website_url": "https://example.com/",
+  "amount": "1000",
+  "purchase_order_id": "Order01",
+  "purchase_order_name": "test",
+  "customer_info": {
+    "name": "Test Bahadur",
+    "email": "test@khalti.com",
+    "phone": "9800000001"
+  }
+}
+

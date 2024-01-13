@@ -2,6 +2,7 @@
 using Application.Users.Commands.CreateProvider;
 using Application.Users.Query.BidSelectedOrders;
 using Application.Users.Query.LoginProvider;
+using Application.Users.Query.ProducerDetail;
 using Contracts;
 using Domain.User;
 using Mapster;
@@ -85,6 +86,18 @@ public class ProvidersController : ControllerBase
 
         return response.Match(
                 bidresponse => Ok(bidresponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpGet("details")]
+    public async Task<IActionResult> GetUserDetail()
+    {
+        var providerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var query = new ProviderDetailQuery(providerId);
+        var response = await _mediator.Send(query);
+        return response.Match(
+                providerResponse => Ok(providerResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }
