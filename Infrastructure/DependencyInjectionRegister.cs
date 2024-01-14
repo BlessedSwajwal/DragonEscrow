@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System.Text;
 
 namespace Infrastructure;
@@ -28,6 +29,14 @@ public static class DependencyInjectionRegister
         //Email
         services.Configure<EmailSettings>(configuration.GetSection(EmailSettings.SectionName));
         services.AddSingleton<IEmailSenderService, EmailSenderService>();
+
+        //Stripe
+        string? stripe_secret = configuration.GetValue<string>("StripeSecret");
+        if (stripe_secret is null)
+        {
+            throw new Exception("No key for stripe.");
+        }
+        StripeConfiguration.ApiKey = stripe_secret;
 
         return services;
     }

@@ -88,4 +88,11 @@ public class ConsumersController : ControllerBase
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }
 
+    [HttpGet("stripeCallBack")]
+    [AllowAnonymous]
+    public IActionResult StripeCallBack()
+    {
+        return Ok("Payment processed.");
+    }
+
 }

@@ -34,22 +34,22 @@ public class AcceptBidCommandHandler(IUnitOfWork unitOfWork, IPaymentService pay
         {
             Id = request.UserId
         };
-        var res = await paymentService.GetPaymentUriAsync(userObject, bid.ProposedAmount, order, bid.Id.Value);
-        var paymentUriObject = new PaymentUriResponse(res);
+
+        string paymentUri;
+        if (request.PaymentMethod.Equals("Khalti"))
+            paymentUri = await paymentService.GetPaymentUriAsync(userObject, bid.ProposedAmount, order, bid.Id.Value);
+
+        else
+            paymentUri = await paymentService.GetStripePaymentUriAsync(userObject, bid.ProposedAmount, order, bid.Id.Value);
+
+        var paymentUriObject = new PaymentUriResponse(paymentUri);
 
         if (!order.OrderStatus.ToLower().Equals(OrderStatusConstants.CREATED))
         {
             return new BidCannotAcceptError(order.OrderStatus.ToString());
         }
 
-        var provider = await unitOfWork.ProviderRepository.GetByIdAsync(bid.BidderId);
-
-        //TODO: Event handlers.
-        //order.AcceptBid(bid);
-        //await unitOfWork.BidRepository.MarkBidSelected(order.Id, bid.Id);
         await unitOfWork.SaveAsync();
-
-        //emailSenderService.SendBidAcceptedEmail(provider, order, bid);
 
         return paymentUriObject;
     }

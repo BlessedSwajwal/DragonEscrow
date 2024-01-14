@@ -1,4 +1,5 @@
-﻿using Application.Orders.Command.AcceptOrder;
+﻿using Application.Common.Services;
+using Application.Orders.Command.AcceptOrder;
 using Application.Orders.Command.CreateOrder;
 using Application.Orders.Command.VerifyBidPayment;
 using Application.Orders.Query.GetCreatedOrders;
@@ -17,7 +18,7 @@ namespace API.Controllers;
 
 [Route("api/Order")]
 [ApiController]
-public class OrdersController(ISender _mediator) : ControllerBase
+public class OrdersController(ISender _mediator, IPaymentService paymentService) : ControllerBase
 {
     /// <summary>
     /// Only providers should call this endpoint. Gets all the order that has status 'CREATED' allowing 
@@ -107,20 +108,42 @@ public class OrdersController(ISender _mediator) : ControllerBase
     }
 
     [HttpGet("{OrderId}/AcceptBid")]
-    public async Task<IActionResult> AcceptBid([FromRoute] Guid OrderId, [FromQuery] Guid BidId)
+    public async Task<IActionResult> AcceptBidWithKhalti([FromRoute] Guid OrderId, [FromQuery] Guid BidId)
     {
         if (BidId.Equals(Guid.Empty)) return Problem(detail: "BidId must be specified.");
-        //if(Enum.Parse<UserType>(User.FindFirstValue("UserType")!) != UserType.CONSUMER)
-        //{
-        //    return Problem(detail: "Must be consumer to accept");
-        //}
         var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-        var command = new AcceptBidCommand(userId, OrderId, BidId);
+        var command = new AcceptBidCommand(userId, OrderId, BidId, "Khalti");
         var response = await _mediator.Send(command);
         return response.Match(
                 paymentUriResponse => Ok(paymentUriResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpGet("{OrderId}/AcceptBidWithStripe")]
+    public async Task<IActionResult> AcceptBidWithStripe([FromRoute] Guid OrderId, [FromQuery] Guid BidId)
+    {
+        if (BidId.Equals(Guid.Empty)) return Problem(detail: "BidId must be specified.");
+
+        var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+        var command = new AcceptBidCommand(userId, OrderId, BidId, "Stripe");
+        var response = await _mediator.Send(command);
+        return response.Match(
+                paymentUriResponse => Ok(paymentUriResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+
+    [HttpPost("StripeWebHook")]
+    [AllowAnonymous]
+    public async Task<IActionResult> StripeWebHook()
+    {
+        var body = await new StreamReader(Request.Body).ReadToEndAsync();
+        await Console.Out.WriteLineAsync(body);
+        await paymentService.AcceptBidAfterStripePayment(body, Request.Headers["Stripe-Signature"]!);
+        return Ok();
     }
 }

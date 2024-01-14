@@ -22,8 +22,6 @@ public class VerifyBidPaymentCommandHandler(IPaymentService paymentService, IUni
         //Check if bid is of the said order.
         if (bid.Equals(Bid.Empty) || bid.OrderId != OrderId.Create(request.OrderId)) return new BidNotFoundError();
 
-        //verify payment
-        //Check payment status
         PaymentConfirmation paymentConfirmation = await paymentService.VerifyPayment(request.Pidx);
 
         //Change order status to processing
