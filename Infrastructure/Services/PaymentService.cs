@@ -16,6 +16,7 @@ public class PaymentService : IPaymentService
     private readonly HttpClient httpClient;
     private readonly IConfiguration configuration;
     private readonly IUnitOfWork _unitOfWork;
+    const string apiUrl = "https://dragonescrow.somee.com/api";
 
     public PaymentService(HttpClient client, IConfiguration configuration, IUnitOfWork unitOfWork)
     {
@@ -29,7 +30,7 @@ public class PaymentService : IPaymentService
         Object payload = new
         {
             //TODO: Change the return url.
-            return_url = $"http://dragonescrow-001-site1.htempurl.com/api/Order/bidPaymentCallback",
+            return_url = $"{apiUrl}/Order/bidPaymentCallback",
 
             website_url = "https://example.com/",
             amount = order.Cost,
@@ -62,7 +63,7 @@ public class PaymentService : IPaymentService
         Object payload = new
         {
             //TODO: Change the return url.
-            return_url = $"http://dragonescrow-001-site1.htempurl.com/api/Order/paymentCallback",
+            return_url = $"{apiUrl}/Order/paymentCallback",
 
             website_url = "https://example.com/",
             amount,
@@ -92,7 +93,7 @@ public class PaymentService : IPaymentService
     public async Task<string> GetStripePaymentUriAsync(object user, int amount, Order order, Guid bidId)
     {
 
-        var return_url = "http://dragonescrow-001-site1.htempurl.com/api/Consumer/stripeCallBack";
+        var return_url = $"https://dealshield.vercel.app/stripeCallBack";
         var options = new SessionCreateOptions
         {
             LineItems = new List<SessionLineItemOptions>
@@ -101,7 +102,7 @@ public class PaymentService : IPaymentService
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = 50,
+                        UnitAmount = amount/128,
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {

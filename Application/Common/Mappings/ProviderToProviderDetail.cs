@@ -13,6 +13,8 @@ public class ProviderToProviderDetail : IRegister
             .Map(dest => dest.FirstName, src => src.FirstName)
             .Map(dest => dest.LastName, src => src.LastName)
             .Map(dest => dest.Email, src => src.Email)
-            .Map(dest => dest.TotalOrderCount, src => src.AcceptedOrders.Count);
+            .Map(dest => dest.TotalOrderCount, src => src.AcceptedOrders.Count)
+            .Map(dest => dest.AvgRating, src => src.AvgRating)
+            .Map(dest => dest.RatingCount, src => src.RatingCount);
     }
 }

@@ -10,6 +10,7 @@ public abstract class UserBase : Entity<UserId>
     public string Password { get; private set; }
     public string MobileNo { get; private set; }
     public abstract UserType UserType { get; }
+    public DateTime CreatedDate { get; private set; }
 
     protected UserBase(UserId id, string firstName, string lastName, string email, string password, string mobileNo)
         : base(id)
@@ -19,6 +20,7 @@ public abstract class UserBase : Entity<UserId>
         Email = email;
         Password = password;
         MobileNo = mobileNo;
+        CreatedDate = DateTime.Now;
     }
 
     protected UserBase() { }

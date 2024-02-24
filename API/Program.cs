@@ -17,6 +17,17 @@ builder.Services.AddControllers();
 {
     builder.Services.AddApplication()
         .AddInfrastructure(builder.Configuration);
+
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(name: "MyPolicy",
+                          policy =>
+                          {
+                              policy.WithOrigins("http://localhost:5173", "http://localhost:3000", "http://192.168.0.101:5173", "https://dealshield.vercel.app")
+                              .AllowAnyHeader()
+                              .AllowAnyMethod();
+                          });
+    });
 }
 
 {
@@ -36,6 +47,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("MyPolicy");
 
 app.UseHttpsRedirection();
 

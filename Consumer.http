@@ -1,5 +1,5 @@
 @Address=https://localhost:7240/api/Consumer
-@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IkNPTlNVTUVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJkNjg0OTQ1Mi02NDFkLTRhOGUtYjg2OC1kMzAzYzZjMDkzNGMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYWphbEBjby5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIwMDAwMDAwMDAwIiwiZXhwIjoxNzIwNzY2MzM5LCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.PYP7ANewIXzUFnZN0TtzDSP0yPPgqQrwyx-a70jzMvw
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IkNPTlNVTUVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI1ZTIzYTRlNS0yNTY0LTRmM2ItOTA2OS00ZmNiNjhlYWIwZjUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJjb25zdW1lcjFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiU2FqYWwiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiR2hpbWlyZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL21vYmlsZXBob25lIjoiMTIzNDU2Nzg5MCIsImV4cCI6MTcyMjc0OTQ2OCwiaXNzIjoiRHJhZ29uc0VzY3JvdyIsImF1ZCI6IkRyYWdvbnNFc2Nyb3cifQ.gcLb-IU4MvfQRlI_j6srVmiy0Ne6P1tFD5Xkhcp_y-Q
 
 POST {{Address}}/register
 Content-Type: application/json
@@ -7,7 +7,7 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "consumer1@gmail.com",
+  "email": "test@consumer.com",
   "phone": "1234567890",
   "password": "Ab@12abc"
 }
@@ -17,8 +17,8 @@ POST {{Address}}/login
 Content-Type: application/json
 
 {
-  "email": "sajal@co.com",
-  "password": "F@kepassword1618"
+  "email": "consumer1@gmail.com",
+  "password": "Ab@12abc"
 }
 
 ######### GET ALL CONSUMERS ORDER
@@ -28,6 +28,7 @@ Authorization: Bearer {{Token}}
 ############ GET DETAIL 
 GET {{Address}}/details
 Authorization: Bearer {{Token}}
+
 
 ########
 

@@ -90,12 +90,27 @@ public class ProvidersController : ControllerBase
                 ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
     }
 
+
     [HttpGet("details")]
     public async Task<IActionResult> GetUserDetail()
     {
         var providerId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var query = new ProviderDetailQuery(providerId);
         var response = await _mediator.Send(query);
+        return response.Match(
+                providerResponse => Ok(providerResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [AllowAnonymous]
+    [HttpGet("providerDetails/{ProviderId}")]
+    public async Task<IActionResult> GetPublicDetailOfProvider([FromRoute] Guid ProviderId)
+    {
+        Console.Out.WriteLine(ProviderId);
+        var query = new ProviderDetailQuery(ProviderId);
+        var response = await _mediator.Send(query);
+
         return response.Match(
                 providerResponse => Ok(providerResponse),
                 serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),

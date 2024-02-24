@@ -10,6 +10,7 @@ public record OrderResponse(
     int AllowedDays,
     Guid ProviderId,
     DateTime AcceptedDate,
+    DateTime CompletionDate,
     DateTime DeadLine,
     string PaymentUri,
     IReadOnlyList<BidResponse> Bids,

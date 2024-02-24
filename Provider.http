@@ -1,5 +1,5 @@
 @Address=https://localhost:7240/api/Provider
-@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIwOWM5NTUwNS0xMTk1LTQxNWYtODgxMC00MmE4MWQ1ZjY2ODMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwcm92aWRlcjFAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiU2FqYWwiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiR2hpbWlyZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL21vYmlsZXBob25lIjoiMTIzNDU2Nzg5MCIsImV4cCI6MTcyMDc3NjE4NSwiaXNzIjoiRHJhZ29uc0VzY3JvdyIsImF1ZCI6IkRyYWdvbnNFc2Nyb3cifQ.yn5hEBjwfsZSZ1a8MZDCXBObUyt26ztrmojbu8WDuQw
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiJkYjM5YmVjZC1lOTJiLTRiNWYtOWQ4MS0zNWY1ZWU3MjQyMzkiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwcm92aWRlcjJAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiU2FqYWwiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiR2hpbWlyZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL21vYmlsZXBob25lIjoiMTIzNDU2Nzg5MCIsImV4cCI6MTcyMjc1MTE4OSwiaXNzIjoiRHJhZ29uc0VzY3JvdyIsImF1ZCI6IkRyYWdvbnNFc2Nyb3cifQ.WdwlDDO1nN6rZJXOLBM6iKRZ2Klf5I5plfNfwXPIt8A
 
 POST {{Address}}/register
 Content-Type: application/json
@@ -7,7 +7,7 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "provider1@gmail.com",
+  "email": "test@provider.com",
   "phone": "1234567890",
   "password": "Abc@@12abc"
 }
@@ -17,8 +17,8 @@ POST {{Address}}/login
 Content-Type: application/json
 
 {
-  "email": "provider1@gmail.com",
-  "password": "Abc@@12abc"
+  "email": "test@provider.com",
+  "password": "F@kepassword1618"
 }
 
 ##### Provider detail
@@ -31,7 +31,7 @@ Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-    "OrderId": "06082f8d-f1c0-4fd7-b54e-8b2e9d9e9d4f",
+    "OrderId": "4038da71-ddac-498f-8c62-daf9670f4c1f",
     "ProposedAmount": 2000,
     "Comment": "Will be using A1 materials."
 }
@@ -40,9 +40,6 @@ Content-Type: application/json
 #### Get All Selected bids
 GET {{Address}}/GetSelectedBids
 Authorization: Bearer {{Token}}
-
-
-
 
 ### Generate Khalti payment Uri
 
@@ -62,4 +59,7 @@ Authorization: key live_secret_key_68791341fdd94846a146f0457ff7b455
     "phone": "9800000001"
   }
 }
+
+############ Provider public detail
+GET {{Address}}/providerDetails/36597a2a-199a-40a6-8d65-b90bf8611dd7
 

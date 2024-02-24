@@ -18,7 +18,7 @@ namespace API.Controllers;
 
 [Route("api/Order")]
 [ApiController]
-public class OrdersController(ISender _mediator, IPaymentService paymentService) : ControllerBase
+public partial class OrdersController(ISender _mediator, IPaymentService paymentService) : ControllerBase
 {
     /// <summary>
     /// Only providers should call this endpoint. Gets all the order that has status 'CREATED' allowing 

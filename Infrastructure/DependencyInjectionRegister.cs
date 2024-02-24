@@ -19,7 +19,7 @@ public static class DependencyInjectionRegister
     {
         services.AddSingleton<IJwtGenerator, JwtGenerator>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddDbContext<DragonEscrowDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DragonEscrowDb")));
+        services.AddDbContext<DragonEscrowDbContext>(options => options.UseSqlServer("workstation id=DealShield.mssql.somee.com;packet size=4096;user id=dragonescrow_SQLLogin_1;pwd=yaxzck7pim;data source=DealShield.mssql.somee.com;persist security info=False;initial catalog=DealShield;TrustServerCertificate=True"));
 
         AddAuth(services, configuration);
         AddHttpClients(services, configuration);
