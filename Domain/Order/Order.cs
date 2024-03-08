@@ -23,6 +23,8 @@ public class Order : Entity<OrderId>
     private List<BidId> _bidIds = [];
     public IReadOnlyList<BidId> BidIds => _bidIds.AsReadOnly();
     public BidId? AcceptedBidId { get; private set; }
+    public bool Rated { get; private set; } = false;
+    public int Rating { get; private set; } = 0;
 
     private Order(OrderId id, string name, string description, int cost, UserId consumerId, int allowedDays) : base(id)
     {
@@ -87,6 +89,13 @@ public class Order : Entity<OrderId>
         ProviderId = bid.BidderId;
         AcceptedDate = DateTime.UtcNow;
         OrderStatus = OrderStatusConstants.PROCESSING;
+    }
+
+    //Rate
+    public void RateOrder(int ratingCount)
+    {
+        Rated = true;
+        Rating = ratingCount;
     }
     private Order() { }
 }
