@@ -8,5 +8,6 @@ public class RateOrderCommandValidator : AbstractValidator<RateOrderCommand>
     {
         RuleFor(x => x.ConsumerId).NotEmpty();
         RuleFor(x => x.OrderId).NotEmpty();
+        RuleFor(x => x.RatingCount).ExclusiveBetween(0, 10);
     }
 }

@@ -9,9 +9,9 @@ using OneOf.Types;
 
 namespace Application.Orders.Command.RateOrder;
 
-public class RateOrderCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<RateOrderCommand, OneOf<Some, ValidationErrors, IServiceError>>
+public class RateOrderCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<RateOrderCommand, OneOf<Some, IServiceError, ValidationErrors>>
 {
-    public async Task<OneOf<Some, ValidationErrors, IServiceError>> Handle(RateOrderCommand request, CancellationToken cancellationToken)
+    public async Task<OneOf<Some, IServiceError, ValidationErrors>> Handle(RateOrderCommand request, CancellationToken cancellationToken)
     {
         //Get the consumer and order
         var consumer = await unitOfWork.ConsumerRepository.GetByIdAsync(UserId.Create(request.ConsumerId));
@@ -20,20 +20,28 @@ public class RateOrderCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<R
         if (order.Equals(Order.Empty) || consumer.Equals(Consumer.Empty))
         {
             //TODO: Use errors insted of exception.
-            throw new InvalidOperationException();
+            return new CustomError
+            {
+                ErrorCode = System.Net.HttpStatusCode.BadRequest,
+                CustomMessage = "Invalid order"
+            };
         }
 
         //Can not rate uncompleted orders.
-        if (order.OrderStatus.Equals(OrderStatusConstants.COMPLETED))
+        if (!order.OrderStatus.Equals(OrderStatusConstants.COMPLETED, StringComparison.OrdinalIgnoreCase) && !order.OrderStatus.Equals(OrderStatusConstants.PAID, StringComparison.OrdinalIgnoreCase))
         {
             return new Some();
         }
 
         //Check if the order is of the consumer.
-        if (!order.ConsumerId.Equals(request.ConsumerId))
+        if (!order.ConsumerId.Value.Equals(request.ConsumerId))
         {
             //TODO: Use errors insted of exception.
-            throw new InvalidOperationException();
+            return new CustomError
+            {
+                ErrorCode = System.Net.HttpStatusCode.Unauthorized,
+                CustomMessage = "Not authorized to rate this order."
+            };
         }
 
         //Check if order is already rated.

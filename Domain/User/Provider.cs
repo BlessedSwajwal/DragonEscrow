@@ -36,10 +36,10 @@ public class Provider : UserBase
         _acceptedOrders.Add(orderId);
     }
 
-    public void AddRating(int ratingCount)
+    public void AddRating(int rating)
     {
         RatingCount++;
-        AvgRating = (AvgRating + ratingCount) / ratingCount;
+        AvgRating = (AvgRating + rating) / RatingCount;
     }
 
     private Provider() { }

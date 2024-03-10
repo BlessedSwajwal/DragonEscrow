@@ -8,4 +8,5 @@ public static class OrderStatusConstants
     public static readonly string PROCESSING = "processing";
     public static readonly string MARKED_FULFILLED = "marked fulfilled";
     public static readonly string COMPLETED = "completed";
+    public static readonly string PAID = "PAID";
 }
