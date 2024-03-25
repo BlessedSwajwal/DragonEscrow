@@ -1,13 +1,14 @@
-﻿using Application.Common.Services;
+﻿using Application.Common.Algo;
+using Application.Common.Services;
 using Domain.Bids;
 
 namespace Infrastructure.Algo;
-public class WeightedScoringAlgo(IUnitOfWork uow)
+public class WeightedScoringAlgo(IUnitOfWork uow) : IWeightedScoringAlgo
 {
-    double amountScore = 0.8;
-    double providerAgeScore = 1.2;
-    double providerRatingScore = 1.4;
-    public async Task<Bid> GetRecommendedBid(List<Bid> bids)
+    double amountScore = -2.0;
+    double providerAgeScore = 3;
+    double providerRatingScore = 5;
+    public async Task<Bid> GetRecommendedBid(IReadOnlyList<Bid> bids)
     {
         if (!bids.Any()) return Bid.Empty;
         var providerIds = bids.Select(b => b.BidderId).ToList();

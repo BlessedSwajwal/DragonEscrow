@@ -15,5 +15,6 @@ public record OrderResponse(
     string PaymentUri,
     IReadOnlyList<BidResponse> Bids,
     Guid AcceptedBid,
+    Guid RecommendedBid,
     bool Rated,
     int Rating);

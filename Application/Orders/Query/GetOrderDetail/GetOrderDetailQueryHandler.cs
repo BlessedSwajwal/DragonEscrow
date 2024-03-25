@@ -1,4 +1,5 @@
-﻿using Application.Common.Authorization;
+﻿using Application.Common.Algo;
+using Application.Common.Authorization;
 using Application.Common.Errors;
 using Application.Common.Services;
 using Domain.Order;
@@ -13,6 +14,7 @@ namespace Application.Orders.Query.GetOrderDetail;
 
 public class GetOrderDetailQueryHandler(
     IAuthorizationService _authorizationService,
+    IWeightedScoringAlgo weightedScoringAlgo,
     IUnitOfWork unitOfWork,
     IPaymentService paymentUri) : IRequestHandler<GetOrderDetailQuery, OneOf<OrderResponse, IServiceError, ValidationErrors>>
 {
@@ -63,9 +65,12 @@ public class GetOrderDetailQueryHandler(
         //Generate Bid Response
         var bidResponse = bids.Adapt<List<BidResponse>>();
 
+        var recommendedBid = await weightedScoringAlgo.GetRecommendedBid(bids);
+
         var orderResponse = order.BuildAdapter()
                                 .AddParameters("PaymentUri", url)
                                 .AddParameters("BidResponses", bidResponse)
+                                .AddParameters("RecommendedBid", recommendedBid.Id.Value)
                                 .AdaptToType<OrderResponse>();
 
         return orderResponse;

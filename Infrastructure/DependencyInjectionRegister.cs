@@ -1,4 +1,6 @@
-﻿using Application.Common.Services;
+﻿using Application.Common.Algo;
+using Application.Common.Services;
+using Infrastructure.Algo;
 using Infrastructure.Authentication;
 using Infrastructure.Persistence.EntityFrameWork;
 using Infrastructure.Services;
@@ -17,7 +19,7 @@ public static class DependencyInjectionRegister
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-
+        services.AddScoped<IWeightedScoringAlgo, WeightedScoringAlgo>();
         services.AddSingleton<IJwtGenerator, JwtGenerator>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddDbContext<DragonEscrowDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DragonEscrowDb")));

@@ -32,6 +32,7 @@ public class CreateOrderCommandHandler(IUnitOfWork _unitOfWork, IMapper _mapper)
         var response = order.BuildAdapter()
                             .AddParameters("PaymentUri", "")
                             .AddParameters("BidResponses", new List<BidResponse>())
+                            .AddParameters("RecommendedBid", Guid.Empty)
                             .AdaptToType<OrderResponse>();
         return response;
     }
