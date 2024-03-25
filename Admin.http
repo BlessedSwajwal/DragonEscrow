@@ -1,0 +1,39 @@
+@Address=https://localhost:7240/api/Admin
+@AdminToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IkFETUlOIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiIxNGIyMGU5NC1mYTMwLTRhMDMtYTVlZC04YWY2MTliMTQ5YTAiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBkZWFsc2hpZWxkLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6IkFkbWluIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkRlYWxTaGllbGQiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6IjAwMDAwMDAwMDAiLCJleHAiOjE3MjY2NTc5ODUsImlzcyI6IkRyYWdvbnNFc2Nyb3ciLCJhdWQiOiJEcmFnb25zRXNjcm93In0.reqDRJccYvtNzi6jQMaS6dYy19MtmHbYeRiXLZEg-ek
+@OrderId=0ef6c854-bf59-4da7-80e5-75c98890f615
+###### Login as Admin
+POST {{Address}}/Login
+Content-Type: application/json
+
+{
+  "Email": "admin@dealshield.com",
+  "Password": "F@kepassword1111"
+}
+
+####### Get list of completed orders
+GET {{Address}}/CompletedOrders
+Authorization: Bearer {{AdminToken}}
+
+####### Get list of disputed orders
+GET {{Address}}/DisputedOrders
+Authorization: Bearer {{AdminToken}}
+
+####### Get list of disputed orders
+GET {{Address}}/PaidOrders
+Authorization: Bearer {{AdminToken}}
+
+##### Get monthly payments processed by escrow site
+GET {{Address}}/MonthlyTransaction
+Authorization: Bearer {{AdminToken}}
+
+####### Previous 30 days transaction
+GET {{Address}}/PreviousMonthTransaction
+Authorization: Bearer {{AdminToken}}
+
+###### Overall details
+GET {{Address}}/GetOverAllDetails
+Authorization: Bearer {{AdminToken}}
+
+##### Mark order paid
+GET {{Address}}/MarkOrderPaid?orderId={{OrderId}}
+Authorization: Bearer {{AdminToken}}

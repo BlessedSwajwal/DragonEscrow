@@ -58,7 +58,9 @@ namespace Infrastructure.Migrations
                     ProviderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AcceptedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CompletionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AcceptedBidId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    AcceptedBidId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Rated = table.Column<bool>(type: "bit", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

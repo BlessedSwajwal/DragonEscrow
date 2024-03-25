@@ -1,5 +1,5 @@
 @Address=https://localhost:7240/api/Provider
-@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI5NzRlMTFlNi1kZWJiLTRlMTUtYWRjNi1hZWFkZjRiNTFjZjciLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJzYWphbEBwcm92aWRlci5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiI5ODQ1MjA5MDgwIiwiZXhwIjoxNzI1NTk4NjUzLCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.3PhTEteWlPcXDXkbz9tde27EJGmfoaweqg1lilHImbs
+@Token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyVHlwZSI6IlBST1ZJREVSIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI4ZmQwMTdiNi1lM2NlLTRmNTgtODc5MC1kMGU4NzI2Njc2OTIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJwcm92aWRlcjJAZGVhbHNoaWVsZC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9naXZlbm5hbWUiOiJTYWphbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJHaGltaXJlIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbW9iaWxlcGhvbmUiOiIxMjM0NTY3ODkwIiwiZXhwIjoxNzI2NzI2MjY2LCJpc3MiOiJEcmFnb25zRXNjcm93IiwiYXVkIjoiRHJhZ29uc0VzY3JvdyJ9.C0cWlZ7USW4g-DnHrl97B91PLzEVapxk_qPubRjEqFo
 
 POST {{Address}}/register
 Content-Type: application/json
@@ -7,9 +7,9 @@ Content-Type: application/json
 {
   "firstName": "Sajal",
   "lastName": "Ghimire",
-  "email": "test@provider.com",
+  "email": "provider2@dealshield.com",
   "phone": "1234567890",
-  "password": "Abc@@12abc"
+  "password": "F@kepassword1111"
 }
 
 ####### Login as provider
@@ -17,8 +17,8 @@ POST {{Address}}/login
 Content-Type: application/json
 
 {
-  "email": "sajal@provider.com",
-  "password": "F@kepassword1618"
+  "email": "provider@dealshield.com",
+  "password": "F@kepassword1111"
 }
 
 ##### Provider detail
@@ -31,8 +31,8 @@ Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-    "OrderId": "4038da71-ddac-498f-8c62-daf9670f4c1f",
-    "ProposedAmount": 2000,
+    "OrderId": "a3ce7f9e-0ae8-4209-b993-0f060a4eb6c6",
+    "ProposedAmount": 333300,
     "Comment": "Will be using A1 materials."
 }
 

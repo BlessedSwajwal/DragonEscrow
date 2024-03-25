@@ -5,21 +5,18 @@
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RatingsAdded : Migration
+    public partial class RatingsCorrection : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "Rated",
-                table: "Order",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.DropColumn(
+                name: "AvgRating",
+                table: "Providers");
 
             migrationBuilder.AddColumn<int>(
-                name: "Rating",
-                table: "Order",
+                name: "TotalRating",
+                table: "Providers",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
@@ -29,12 +26,15 @@ namespace Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Rated",
-                table: "Order");
+                name: "TotalRating",
+                table: "Providers");
 
-            migrationBuilder.DropColumn(
-                name: "Rating",
-                table: "Order");
+            migrationBuilder.AddColumn<double>(
+                name: "AvgRating",
+                table: "Providers",
+                type: "float",
+                nullable: false,
+                defaultValue: 0.0);
         }
     }
 }

@@ -49,4 +49,10 @@ public class EProviderRepository : IProviderRepository
         if (provider is null) return Provider.Empty;
         return provider;
     }
+
+    public async Task<List<Provider>> GetAllByIdAsync(List<UserId> ids)
+    {
+        var providerList = await _dbContext.Providers.Where(p => ids.Contains(p.Id)).ToListAsync();
+        return providerList;
+    }
 }

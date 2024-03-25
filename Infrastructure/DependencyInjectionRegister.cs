@@ -17,9 +17,10 @@ public static class DependencyInjectionRegister
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+
         services.AddSingleton<IJwtGenerator, JwtGenerator>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddDbContext<DragonEscrowDbContext>(options => options.UseSqlServer("workstation id=DealShield.mssql.somee.com;packet size=4096;user id=dragonescrow_SQLLogin_1;pwd=yaxzck7pim;data source=DealShield.mssql.somee.com;persist security info=False;initial catalog=DealShield;TrustServerCertificate=True"));
+        services.AddDbContext<DragonEscrowDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DragonEscrowDb")));
 
         AddAuth(services, configuration);
         AddHttpClients(services, configuration);
@@ -58,15 +59,16 @@ public static class DependencyInjectionRegister
         services.AddSingleton(Options.Create<JwtSettings>(jwtSettings));
 
         //Add Authentication
-        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtSettings.Issuer,
-            ValidAudience = jwtSettings.Audience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
-        });
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings.Issuer,
+                ValidAudience = jwtSettings.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+            });
     }
 }

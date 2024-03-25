@@ -1,4 +1,5 @@
-﻿using Application.Orders.Command.MarkFulfilled;
+﻿using Application.Orders.Command.MarkDisputed;
+using Application.Orders.Command.MarkFulfilled;
 using Application.Orders.Command.RateOrder;
 using Application.Orders.Command.VerifyOrderCompletion;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,18 @@ public partial class OrdersController
     {
         var consumerId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         var command = new VerifyOrderCompletionCommand(consumerId, OrderId);
+        var response = await _mediator.Send(command);
+        return response.Match(
+                someResponse => Ok(someResponse),
+                serviceError => Problem(title: "Error", statusCode: serviceError.StatusCode, detail: serviceError.ErrorMessage),
+                ruleValidationErrors => Problem(title: "Error", statusCode: (int)HttpStatusCode.BadRequest, detail: ruleValidationErrors.GetValidationErrors()));
+    }
+
+    [HttpGet("RaiseDispute/{OrderId}")]
+    public async Task<IActionResult> RaiseDispute([FromRoute] Guid OrderId)
+    {
+        var consumerId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var command = new MarkDisputedCommand(consumerId, OrderId);
         var response = await _mediator.Send(command);
         return response.Match(
                 someResponse => Ok(someResponse),

@@ -8,6 +8,7 @@ public interface IProviderRepository
 {
     Task<Provider> AddProvider(Provider provider);
     Task<bool> CheckIfAlreadyBiddedAsync(UserId userId, OrderId orderId);
+    Task<List<Provider>> GetAllByIdAsync(List<UserId> ids);
     Task<Provider> GetByEmail(string email);
     Task<Provider> GetByIdAsync(UserId id);
 

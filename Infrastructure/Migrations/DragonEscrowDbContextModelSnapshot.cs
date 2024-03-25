@@ -139,9 +139,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ProviderId");
 
-                    b.Property<double>("AvgRating")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -166,6 +163,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RatingCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalRating")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

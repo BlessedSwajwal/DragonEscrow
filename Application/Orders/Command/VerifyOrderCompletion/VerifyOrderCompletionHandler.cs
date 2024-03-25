@@ -1,14 +1,13 @@
 ﻿using Application.Common.Errors;
 using Application.Common.Services;
-using Application.Orders.Command.VerifyOrderCompletion;
 using Domain.Order;
 using Domain.Order.ValueObjects;
 using MediatR;
 using OneOf;
 
-namespace Application.Orders.Command.RateOrder;
+namespace Application.Orders.Command.VerifyOrderCompletion;
 
-public class VerifyOrderCompletionHandler(IUnitOfWork unitOfWork) : IRequestHandler<VerifyOrderCompletionCommand, OneOf<String, IServiceError, ValidationErrors>>
+public class VerifyOrderCompletionHandler(IUnitOfWork unitOfWork) : IRequestHandler<VerifyOrderCompletionCommand, OneOf<string, IServiceError, ValidationErrors>>
 {
     public async Task<OneOf<string, IServiceError, ValidationErrors>> Handle(VerifyOrderCompletionCommand request, CancellationToken cancellationToken)
     {

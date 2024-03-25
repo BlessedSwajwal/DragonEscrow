@@ -15,6 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Cont
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Requests", "Requests", "{A02A79C3-A00B-4949-A30E-F62E166CD03E}"
 	ProjectSection(SolutionItems) = preProject
+		Admin.http = Admin.http
 		Consumer.http = Consumer.http
 		Order.http = Order.http
 		Provider.http = Provider.http

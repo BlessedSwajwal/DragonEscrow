@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DragonEscrowDbContext))]
-    [Migration("20240308064059_RatingsAdded")]
-    partial class RatingsAdded
+    [Migration("20240325044551_RatingsCorrection")]
+    partial class RatingsCorrection
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,9 +142,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ProviderId");
 
-                    b.Property<double>("AvgRating")
-                        .HasColumnType("float");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -169,6 +166,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RatingCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalRating")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

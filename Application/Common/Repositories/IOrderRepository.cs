@@ -11,4 +11,11 @@ public interface IOrderRepository
 
     Task<List<Order>> GetAllOrdersAsyncFromConsumerId(UserId id);
     Task<List<Order>> GetCreatedOrders();
+    Task<IReadOnlyList<Order>> GetCompletedOrders();
+    Task<IReadOnlyList<Order>> GetDisputedOrders();
+    Task<double> GetMonthlyTransactions();
+    Task<double> GetPreviousMonthTransaction();
+    Task<object> GetOverAllDetails();
+    Task MarkOrderPaid(OrderId orderId);
+    Task<IReadOnlyList<Order>> GetPaidOrders();
 }

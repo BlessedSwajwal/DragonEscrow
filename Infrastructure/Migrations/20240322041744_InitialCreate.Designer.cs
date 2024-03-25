@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DragonEscrowDbContext))]
-    [Migration("20240209051824_InitialCreate")]
+    [Migration("20240322041744_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -90,6 +90,12 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("ProviderId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Rated")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

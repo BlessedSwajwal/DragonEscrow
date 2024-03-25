@@ -29,7 +29,7 @@ public class OrderCreatorOrProviderHandler : AuthorizationHandler<OperationAutho
 
         //TODO: Already accepted orders should not be able to be viewed by other providers.
 
-        if (userId == resource.ConsumerId || context.User.FindFirst("UserType")!.Value.Equals(UserType.PROVIDER.ToString(), StringComparison.CurrentCultureIgnoreCase))
+        if (userId == resource.ConsumerId || context.User.FindFirst("UserType")!.Value.Equals(UserType.PROVIDER.ToString(), StringComparison.CurrentCultureIgnoreCase) || context.User.FindFirst("UserType")!.Value.Equals(UserType.ADMIN.ToString(), StringComparison.OrdinalIgnoreCase))
         {
             context.Succeed(requirement);
         }
